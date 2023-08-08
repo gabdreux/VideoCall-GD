@@ -1,0 +1,50 @@
+/* Desktop (col-lg) 992+ */
+
+/* Desktop e Tablets (col-md) 768 a 991 */
+
+/* Tablets (col-sm) 576 a 767 */
+
+/* Tablets e Celulares (col) 0 a 576 */
+
+/* Mobile (col) 0 a 767 */
+
+
+@media (max-width: 1130px) {
+
+    .no-tablet {
+        display: none !important;
+
+    }
+    
+    html, body {
+        padding-left: 20px;
+        padding-right: 20px;
+
+    }
+
+}
+
+
+@media (max-width: 767px) {
+
+    .no-mobile {
+        display: none !important;
+
+    }
+
+    footer.d-flex.flex-wrap.justify-content-between.align-items-center.py-3.my-4.border-top {
+        display: flex;
+        flex-direction: column-reverse;
+
+    }
+
+    ul.nav.col-md-4.justify-content-end.list-unstyled.d-flex {
+        margin-right: 15px;
+
+    }
+
+    ul.nav.col-12.col-md-auto.mb-2.justify-content-center.mb-md-0 {
+        font-size: 14px;
+    }
+
+}
