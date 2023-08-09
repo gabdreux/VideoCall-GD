@@ -9,7 +9,7 @@
 /* Mobile (col) 0 a 767 */
 
 
-@media (max-width: 1130px) {
+@media (min-width: 768px) and (max-width: 1130px) {
 
     .no-tablet {
         display: none !important;
@@ -22,6 +22,13 @@
 
     }
 
+
+    .row.align-items-start.containerDiv {
+        justify-content: space-around;
+
+    }
+
+
 }
 
 
@@ -29,6 +36,13 @@
 
     .no-mobile {
         display: none !important;
+
+    }
+
+
+    header, footer {
+        padding-left: 20px;
+        padding-right: 20px;
 
     }
 
@@ -46,5 +60,6 @@
     ul.nav.col-12.col-md-auto.mb-2.justify-content-center.mb-md-0 {
         font-size: 14px;
     }
+
 
 }
