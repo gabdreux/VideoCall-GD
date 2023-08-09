@@ -69,6 +69,37 @@ button.btn.btn-primary {
 }
 
 
+.containerDiv {
+  display: flex;
+  justify-content: center;
+}
+
+
+.loginForm {
+  width: 520px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+}
+
+.loginLogo {
+  max-width: 40px;
+  
+}
+
+.loginForm h1 {
+  color: var(--color-green);
+  margin-top: 15px;
+
+}
+
+.loginForm input {
+  margin-bottom: 10px;
+  
+}
+
+
+
 
 
 
