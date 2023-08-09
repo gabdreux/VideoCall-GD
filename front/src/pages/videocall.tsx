@@ -2,15 +2,55 @@ import React from 'react';
 
 const VideoCall: React.FC = () => {
   return (
-    <div>
-      <h1>Video Call</h1>
-      <iframe
-        src="http://localhost:5000/873c3e9e-b860-4783-9150-42194d37a366"  // Substitua pela URL correta da sua aplicação de videochamada
-        width="100%"
-        height="600"
-        frameBorder="0"
-      ></iframe>
+
+
+<div>
+
+
+  <div className='videoCanva'>
+
+  </div>
+
+
+
+
+
+  <div className="videocallMenu">
+
+    <div className="container text-center">
+        <div className="row">
+
+
+          <div className="col-sm-12 col-md-12 col-lg-4">
+            Column 1
+          </div>
+
+
+
+          <div className="col-sm-12 col-md-12 col-lg-4 callButtonsDiv">
+            <button><i className='far fa-comment'></i></button>
+            <button className='powerOff'><i className='fas fa-power-off'></i></button>
+            <button className='banAlert'><i className='fas fa-exclamation-circle'></i></button>
+            <button className='bolinMenu'><i className='fas fa-ellipsis-v'></i></button>
+          </div>
+
+
+
+          <div className="col-sm-12 col-md-12 col-lg-4">
+            Column 3
+          </div>
+
+
+        </div>
     </div>
+
+
+  </div>
+
+
+
+</div>
+
   );
 };
 

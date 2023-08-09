@@ -4,6 +4,12 @@ import React from 'react';
 const UserAera: React.FC = () => {
 
 
+  const handleChamadaClick = () => {
+    window.location.href = '/videocall';
+  };
+
+
+
   return (
 
   <div className="container text-center">
@@ -175,7 +181,7 @@ const UserAera: React.FC = () => {
               </div>
 
 
-              <button className="btn btn-primary w-100 py-2" type="submit">INICIAR CHAMADA ALEATÓRIA</button>
+              <button className="btn btn-primary w-100 py-2" type="button" onClick={handleChamadaClick}>INICIAR CHAMADA ALEATÓRIA</button>
 
 
           </form>

@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
+
 
 
 const Footer: React.FC = () => {
 
-  const handleClick = () => {
-    
-  };
+
+  // useEffect(() => {
+  //   var currentPage = window.location.pathname;
+  //   var footer = document.getElementById("footer");
+
+  //   if (footer && currentPage === "/videocall") {
+  //     footer.classList.add("videocallFooter");
+  //   } else if (footer) {
+  //     footer.classList.remove("videocallFooter");
+  //   }
+  // }, []);
 
 
   return (
 
-    <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <footer id="footer" className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top videocallFooter">
 
         <p className="col-md-4 mb-0 text-body-secondary">© 2023 Company, Inc</p>
 

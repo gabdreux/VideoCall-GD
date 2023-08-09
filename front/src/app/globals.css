@@ -28,6 +28,12 @@ header, footer {
 }
 
 
+footer.d-flex.flex-wrap.justify-content-between.align-items-center.py-3.my-4.border-top {
+  margin: 0 !important;
+
+}
+
+
 body {
   background-color: var(--color-background);
 }
@@ -192,6 +198,96 @@ input#floatingPassword {
   
 }
 
+.videoCanva {
+  height: 600px;
+
+}
+
+
+.videocallFooter {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+
+}
+
+
+.videocallMenu {
+  background-color: var(--color-green);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: 110px;
+
+}
+
+
+.callButtonsDiv {
+  padding-left: 40px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.videocallMenu button{
+  background-color: var(--color-white);
+  border-radius: 100px;
+  padding: 10px;
+  width: 50px;
+  height: 50px;
+  border-color: var(--color-green-light);
+  margin: 5px;
+
+}
+
+
+.powerOff {
+  width: 60px !important;
+  height: 60px !important;
+
+}
+
+
+.banAlert {
+  border-color: var(--color-red) !important;
+
+}
+
+
+.bolinMenu {
+  background-color: transparent !important;
+  border: none !important;
+  width: 25px !important;
+  height: 25px !important;
+
+}
+
+
+i.far.fa-comment {
+  color: var(--color-green);
+  font-size: 20px;
+  
+}
+
+
+i.fas.fa-power-off {
+  color: var(--color-red);
+  font-size: 35px;
+
+}
+
+
+i.fas.fa-exclamation-circle {
+  color: var(--color-red);
+  font-size: 25px;
+
+}
+
+
+i.fas.fa-ellipsis-v {
+  color: var(--color-black);
+  font-size: 30px;
+
+}
 
 
 
