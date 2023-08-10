@@ -18,12 +18,24 @@
 }
 
 
+html, body {
+  height: 100%;
+
+}
+
+
 header, footer {
     font-family: 'PoppinsRegular', 'Rubik', sans-serif;
     color: var(--color-text);
     background-color: var(--color-white);
     padding-left: 60px;
     padding-right: 60px;
+
+}
+
+
+header.d-flex.flex-wrap.align-items-center.justify-content-center.justify-content-md-between.py-3.mb-4.border-bottom {
+  margin-bottom: 0px !important;
 
 }
 
@@ -198,28 +210,6 @@ input#floatingPassword {
   
 }
 
-.videoCanva {
-  height: 600px;
-
-}
-
-
-.videocallFooter {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-
-}
-
-
-.videocallMenu {
-  background-color: var(--color-green);
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  margin-bottom: 110px;
-
-}
 
 
 .callButtonsDiv {
@@ -227,6 +217,7 @@ input#floatingPassword {
   padding-top: 15px;
   padding-bottom: 15px;
 }
+
 
 .videocallMenu button{
   background-color: var(--color-white);
@@ -287,6 +278,59 @@ i.fas.fa-ellipsis-v {
   color: var(--color-black);
   font-size: 30px;
 
+}
+
+
+Footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+
+}
+
+
+.videocallMenu {
+  background-color: var(--color-green);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+
+}
+
+
+.videoCanva2 {
+  background-color: var(--color-text-out);
+  /* display: flex; */
+
+
+}
+
+
+.video1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 100px);
+  position: relative;
+
+}
+
+
+.meuVideo {
+  background-color: var(--color-text);
+  width: 200px;
+  height: 200px;
+  border: solid 2px var(--color-black);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  margin-left: 20px;
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 150px;
+  left: 0;
+  
 }
 
 

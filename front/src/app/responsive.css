@@ -29,6 +29,12 @@
     }
 
 
+    .meuVideo {
+        margin-bottom: 180px !important;
+        
+    }
+
+
 }
 
 
@@ -61,11 +67,13 @@
         font-size: 14px;
     }
 
-    .videocallMenu {
-        margin-bottom: 180px;
-      
-    }
 
+    .meuVideo {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 180px !important;
+
+    }
 
 
 

@@ -1,8 +1,10 @@
 // Inicialização do socket.io para comunicação com o servidor
 const socket = io('/');
 
+
 // Seleciona o elemento do HTML onde os vídeos serão exibidos
 const videoGrid = document.getElementById('video-grid');
+
 
 
 // Inicialização do Peer.js para comunicação peer-to-peer

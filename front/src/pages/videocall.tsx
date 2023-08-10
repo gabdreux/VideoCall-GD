@@ -1,4 +1,5 @@
 import React from 'react';
+import VideoCanva2 from '@/components/videoCanva2';
 
 const VideoCall: React.FC = () => {
   return (
@@ -7,8 +8,8 @@ const VideoCall: React.FC = () => {
 <div>
 
 
-  <div className='videoCanva'>
-
+  <div>
+    <VideoCanva2 />
   </div>
 
 

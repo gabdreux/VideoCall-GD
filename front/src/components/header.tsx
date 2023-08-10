@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 
 
 
 
 const Header: React.FC = () => {
+
+
+  useEffect(() => {
+    if (window.location.pathname === '/videocall') {
+      console.log('videocall page');
+      const header = document.getElementById('header');
+  
+      if (header) {
+        header.classList.add('hidden');
+        console.log("classe adicioanda!");
+      }
+    }
+  }, []);
+
+
+
 
   const handleLoginClick = () => {
     window.location.href = '/login';
@@ -18,7 +34,7 @@ const Header: React.FC = () => {
 
   return (
 
-    <header className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <header id="header" className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         
 
 
