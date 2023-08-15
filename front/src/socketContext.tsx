@@ -22,6 +22,8 @@ interface ContextProps {
   callUser: (id: string) => void;
   leaveCall: () => void;
   answerCall: () => void;
+  idTocall: string;
+
 }
 
 const SocketContext = createContext<ContextProps | null>(null);
@@ -38,12 +40,13 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [name, setName] = useState('');
   const [call, setCall] = useState<Call>({ isReceivingCall: false, from: '', name: '', signal: null });
   const [me, setMe] = useState('');
+  
 
   const myVideo = useRef<HTMLVideoElement>(null);
   const userVideo = useRef<HTMLVideoElement>(null);
   const connectionRef = useRef<Peer.Instance | null>(null);
 
-
+  const idTocall = 'gabriel';
 
 
   useEffect(() => {
@@ -56,10 +59,17 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         }
       });
 
+
+
     socket.on('me', (id: string) => setMe(id));
+
+
+
+    
 
     socket.on('callUser', ({ from, name: callerName, signal }: Call) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
+
     });
   }, []);
 
@@ -68,7 +78,11 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
 
   const answerCall = () => {
+
+
+    console.log("Before setting callAccepted:", callAccepted);
     setCallAccepted(true);
+    console.log("After setting callAccepted:", callAccepted);
 
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
@@ -95,23 +109,36 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const callUser = (id: string) => {
     const peer = new Peer({ initiator: true, trickle: false, stream });
 
+    console.log("peer:", peer);
+
+    console.log("CHAMOU LIGAÇÃO!");
+
+
+
     peer.on('signal', (data) => {
       socket.emit('callUser', { userToCall: id, signalData: data, from: me, name });
     });
+
+    console.log("data:", id, me, name);
+
 
     peer.on('stream', (currentStream) => {
       if (userVideo.current) {
         userVideo.current.srcObject = currentStream;
       }
+
     });
 
     socket.on('callAccepted', (signal: any) => {
+      console.log("Inside callAccepted socket event:", callAccepted);
       setCallAccepted(true);
-
+      console.log("After setting callAccepted:", callAccepted);
       peer.signal(signal);
+
     });
 
     connectionRef.current = peer;
+    console.log("userVideo:", userVideo);
 
   };
 
@@ -147,10 +174,11 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     callUser,
     leaveCall,
     answerCall,
+    idTocall,
 
   };
 
-
+  
 
   return (
 

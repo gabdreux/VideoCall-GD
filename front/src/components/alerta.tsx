@@ -1,28 +1,55 @@
-import React from 'react';
+import React, { useState, useContext, ReactNode } from 'react';
+import { SocketContext } from '@/socketContext';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
+interface AlertProps {
+  children: ReactNode;
+}
+
+const Alerta: React.FC<AlertProps> = ({ children }) => {
 
 
+  const context = useContext(SocketContext);
 
-const Alerta: React.FC = () => {
+  if (!context) {
+    return null;
+  }
 
-  
-    return (
 
-        <div className="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabIndex={-1} role="dialog" id="modalChoice">
-            <div className="modal-dialog" role="document">
-                <div className="modal-content rounded-3 shadow">
-                    <div className="modal-body p-4 text-center">
-                        <h5 className="mb-0">Enable this setting?</h5>
-                        <p className="mb-0">You can always change your mind in your account settings.</p>
-                    </div>
-                    <div className="modal-footer flex-nowrap p-0">
-                        <button type="button" className="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"><strong>Yes, enable</strong></button>
-                        <button type="button" className="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" data-bs-dismiss="modal">No thanks</button>
-                    </div>
-                </div>
-            </div>
+  const { me, callAccepted, name, setName, callEnded, leaveCall, callUser } = context;
+  const [idToCall, setIdToCall] = useState('');
+
+  return (
+    <div>
+      <div>
+        <div>
+          <div>
+            <p>Account Info</p>
+            <input type='text' value={name} onChange={(e) => setName(e.target.value)} />
+            <CopyToClipboard text={me}>
+              <button>
+                Copy Your ID
+              </button>
+            </CopyToClipboard>
+          </div>
+          <div>
+            <p>Make a call</p>
+            <input value={idToCall} onChange={(e) => setIdToCall(e.target.value)} />
+            {callAccepted && !callEnded ? (
+              <button onClick={leaveCall}>
+                Hang Up
+              </button>
+            ) : (
+              <button onClick={() => callUser(idToCall)}>
+                Call
+              </button>
+            )}
+          </div>
         </div>
-    );
-
+        {children}
+      </div>
+    </div>
+  );
 };
 
 export default Alerta;

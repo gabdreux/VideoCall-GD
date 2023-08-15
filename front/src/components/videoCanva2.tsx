@@ -13,11 +13,12 @@ const VideoCanva2: React.FC = () => {
       useEffect(() => {
         if (!context) return;
 
-        const { callAccepted, callEnded, stream } = context;
+        const { me, callAccepted, callEnded, stream } = context;
 
-        console.log('callAccepted:', callAccepted);
-        console.log('callEnded:', callEnded);
-        console.log('stream:', stream);
+        console.log('callAccepted-VC2:', callAccepted);
+        console.log('callEnded-VC2:', callEnded);
+        console.log('STREAM-VC2:', stream);
+        console.log("ME-VC2:", me);
 
         // Capture the stream and set it to video elements
         if (stream) {
@@ -34,9 +35,6 @@ const VideoCanva2: React.FC = () => {
     if (!context) {
         return null;
     }
-
-
-
 
 
     const { name, callAccepted, myVideo, userVideo, callEnded, stream, call } =  context;

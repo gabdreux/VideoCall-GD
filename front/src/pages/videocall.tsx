@@ -1,7 +1,11 @@
 import React from 'react';
+import { ContextProvider } from '@/socketContext';
 import VideoCanva2 from '@/components/videoCanva2';
 import VideoCallMenu from '@/components/videoCallMenu';
-import { ContextProvider } from '@/socketContext';
+import Alerta from '@/components/alerta';
+import Notifications from '@/components/notifications';
+
+
 
 const VideoCall: React.FC = () => {
 
@@ -13,6 +17,8 @@ const VideoCall: React.FC = () => {
 
   <ContextProvider>
     <div>
+
+      <Alerta><Notifications/></Alerta>
 
       <div>
         <VideoCanva2 />
