@@ -64,7 +64,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     socket.on('me', (id: string) => setMe(id));
 
 
-
+    console.log("ME-CONTEXT:", me);
     
 
     socket.on('callUser', ({ from, name: callerName, signal }: Call) => {

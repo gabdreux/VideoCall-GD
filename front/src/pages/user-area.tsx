@@ -1,4 +1,5 @@
 import React from 'react';
+import ListaAmigos from '@/components/listaAmigos';
 
 
 const UserAera: React.FC = () => {
@@ -17,126 +18,8 @@ const UserAera: React.FC = () => {
 
 
 
-      <div className="col-sm-12 col-md-5 col-lg-3">
 
-
-        <div className="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style={{ width: '100%' }}>
-
-
-
-          <a href="/" className="d-flex align-items-center flex-shrink-0 p-3 link-body-emphasis text-decoration-none border-bottom">
-            <svg className="bi pe-none me-2" width="30" height="24"><use href="#bootstrap"></use></svg>
-            <h4>Amigos:</h4>
-          </a>
-
-
-
-          <div className="container text-center">
-            <div className="row align-items-start cards">
-
-
-              <div className="col-3">
-
-                <div className='containerDiv card'>
-                  <a href="/" className="navbar-brand">
-                    <img className='userAvatarCard' src='imgs/userAvatar.png'/>
-                  </a>
-                </div>
-
-              </div>
-
-
-
-              <div className="col-9">
-                
-              <div className='cardInfos'>
-                <p>Nome e Sobrenome</p>
-                <p>e-mail@seumail.com</p>
-
-                <div className="container text-center card">
-                  <div className="row align-items-start">
-
-                    <div className="col">
-                      <i className='fas fa-phone'><use href="#"></use></i>
-                    </div>
-
-                    <div className="col">
-                      <i className='fas fa-trash-alt'><use href="#"></use></i>
-                    </div>
-
-                  </div>
-                </div>
-
-              </div>
-
-              </div>
-
-
-            </div>
-          </div>
-
-
-
-
-          <a href="/" className="d-flex align-items-center flex-shrink-0 p-3 link-body-emphasis text-decoration-none border-bottom">
-            <svg className="bi pe-none me-2" width="30" height="24"><use href="#bootstrap"></use></svg>
-            <h4>Pedidos pendentes:</h4>
-          </a>
-          
-
-
-
-          <div className="container text-center">
-            <div className="row align-items-start cards">
-
-
-              <div className="col-3">
-
-                <div className='containerDiv card'>
-                  <a href="/" className="navbar-brand">
-                    <img className='userAvatarCard' src='imgs/userAvatar.png'/>
-                  </a>
-                </div>
-
-              </div>
-
-
-
-              <div className="col-9">
-                
-              <div className='cardInfos'>
-                <p>Nome e Sobrenome</p>
-                <p>e-mail@seumail.com</p>
-
-                <div className="container text-center card">
-                  <div className="row align-items-start">
-
-                    <div className="col">
-                      <i className='fas fa-check'><use href="#"></use></i>
-                    </div>
-
-                    <div className="col">
-                      <i className='fas fa-close'><use href="#"></use></i>
-                    </div>
-
-                  </div>
-                </div>
-
-              </div>
-
-              </div>
-
-
-            </div>
-          </div>
-
-
-
-        </div>
-
-
-      </div>
-
+      <ListaAmigos></ListaAmigos>
 
 
 

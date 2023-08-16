@@ -20,6 +20,8 @@ const io = require("socket.io")(server, {
 
 app.use(cors());
 
+app.use(express.json());
+
 
 // Define o mecanismo de visualização como EJS
 app.set('view engine', 'ejs');
@@ -94,6 +96,8 @@ io.on("connection", (socket) => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
 const fs = require('fs');
 const path = require('path');
 
@@ -111,7 +115,7 @@ function getUsers () {
 
 
 //Pega os dados primeiro usuário no "db"
-function getUsers () {
+function getUser () {
   const rawData = fs.readFileSync(dataFilePath);
   const data = JSON.parse(rawData);
   return data.user[0];
@@ -132,6 +136,45 @@ app.get('/api/user', (req, res) => {
   res.json(users);
 });
 
+
+
+
+
+//Rota de login
+app.post('/api/login', (req, res) => {
+	const { email, senha } = req.body; // Supondo que você esteja usando um middleware para analisar o corpo da solicitação
+  
+	const users = getUsers();
+	const user = users.find(u => u.email === email && u.senha === senha);
+  
+	if (!user) {
+	  return res.status(401).json({ message: 'Credenciais inválidas' });
+	}
+  
+	// Se a autenticação for bem-sucedida, você pode retornar um token ou apenas um status 200
+	res.status(200).json({ message: 'Login bem-sucedido' });
+  });
+  
+
+
+
+  //Rota para pegar lista de amigos
+  app.get('/api/friends', (req, res) => {
+	const userId = 1; // Supondo que você tenha o ID do usuário atual após o login
+	const users = getUsers();
+  
+	const currentUser = users.find(user => user.id === userId);
+	if (!currentUser) {
+	  return res.status(404).json({ message: 'Usuário não encontrado' });
+	}
+  
+	const friends = currentUser.friends.map(friendId => {
+	  return users.find(user => user.id === friendId);
+	});
+  
+	res.json(friends);
+
+  });
 
 
 

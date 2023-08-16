@@ -1,11 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 
 const Login: React.FC = () => {
+
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Form submitted"); 
+    try {
+      const response = await axios.post('http://localhost:5000/api/login', { email, senha });
+      if (response.status === 200) {
+        // Login bem-sucedido, redirecione para outra página ou realize outras ações
+        console.log('Login bem-sucedido');
+        window.location.href = '/user-area';
+      }
+    } catch (error: any) {
+      if (error.response) {
+        setErrorMessage(error.response.data.message);
+      } else {
+        setErrorMessage('Erro ao realizar o login');
+      }
+    }
+  };
+
+
+
+
+
   return (
 
     < div className="containerDiv">
-      <form className="loginForm" data-bitwarden-watching="1">
+      <form className="loginForm" data-bitwarden-watching="1" onSubmit={handleSubmit}>
 
           
           <div className='containerDiv'>
@@ -19,13 +50,13 @@ const Login: React.FC = () => {
           </div>
 
           <div className="form-floating">
-            <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
+            <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" onChange={(e) => setEmail(e.target.value)}/>
             <label htmlFor="floatingInput">Email address</label>
           </div>
 
 
           <div className="form-floating">
-            <input type="password" className="form-control" id="floatingPassword" placeholder="Password" />
+            <input type="password" className="form-control" id="floatingPassword" placeholder="Password" onChange={(e) => setSenha(e.target.value)}/>
             <label htmlFor="floatingPassword">Password</label>
           </div>
 
@@ -39,6 +70,7 @@ const Login: React.FC = () => {
 
 
           <button className="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+          {errorMessage && <p className="text-danger">{errorMessage}</p>}
 
           <p className="mt-5 mb-3 text-body-secondary">© 2017–2023</p>
 
