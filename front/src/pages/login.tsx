@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import { SocketContext } from '@/socketContext';
 
 
 const Login: React.FC = () => {
@@ -7,6 +8,9 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+
+  const context = useContext(SocketContext);
 
 
 
@@ -18,7 +22,12 @@ const Login: React.FC = () => {
       if (response.status === 200) {
         // Login bem-sucedido, redirecione para outra página ou realize outras ações
         console.log('Login bem-sucedido');
+        
+        // localStorage.setItem('userId', response.data.userId);
+      
+
         window.location.href = '/user-area';
+
       }
     } catch (error: any) {
       if (error.response) {
@@ -34,6 +43,7 @@ const Login: React.FC = () => {
 
 
   return (
+
 
     < div className="containerDiv">
       <form className="loginForm" data-bitwarden-watching="1" onSubmit={handleSubmit}>

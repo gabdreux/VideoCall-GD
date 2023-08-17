@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { SocketContext } from '@/socketContext';
 import axios from "axios";
+import { id } from "date-fns/locale";
+
 
 type User = {
   id: number;
@@ -9,7 +12,10 @@ type User = {
 };
 
 const ListaAmigos: React.FC = () => {
+
+
   const [friends, setFriends] = useState<User[]>([]);
+
 
   useEffect(() => {
     async function fetchFriends() {
@@ -24,13 +30,59 @@ const ListaAmigos: React.FC = () => {
     fetchFriends();
   }, []);
 
+  
+
+
+  const context = useContext(SocketContext);
+
+  if (!context) {
+    return null;
+  }
+
+  const { me, name, setName, callUser } = context;
+  const [idToCall, setIdToCall] = useState('');
+
+
+
+
+  
+  const callHandler = () => {
+    
+    // const idToCall = "1";
+    // setIdToCall(idToCall);
+
+
+    // const name = "gabriel";
+    // setName(name);
+
+
+    // callUser(idToCall);
+
+
+    if (context) {
+      console.log('Valor de me:', context.me);
+    }
+
+    // window.location.href = '/videocall';
+  }
+
+  
+
+
   return (
+
+
     <div className="col-sm-12 col-md-5 col-lg-3">
       <div className="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style={{ width: '100%' }}>
+
+
+
         <a href="/" className="d-flex align-items-center flex-shrink-0 p-3 link-body-emphasis text-decoration-none border-bottom">
           <svg className="bi pe-none me-2" width="30" height="24"><use href="#bootstrap"></use></svg>
           <h4>Amigos:</h4>
         </a>
+
+
 
         <div className="container text-center">
           {friends.map((friend) => (
@@ -49,7 +101,7 @@ const ListaAmigos: React.FC = () => {
                   <div className="container text-center card">
                     <div className="row align-items-start">
                       <div className="col">
-                        <i className='fas fa-phone'><use href="#"></use></i>
+                        <i className='fas fa-phone' onClick={callHandler}><use href="#"></use></i>
                       </div>
                       <div className="col">
                         <i className='fas fa-trash-alt'><use href="#"></use></i>
@@ -61,6 +113,10 @@ const ListaAmigos: React.FC = () => {
             </div>
           ))}
         </div>
+
+
+
+
 
         <a href="/" className="d-flex align-items-center flex-shrink-0 p-3 link-body-emphasis text-decoration-none border-bottom">
           <svg className="bi pe-none me-2" width="30" height="24"><use href="#bootstrap"></use></svg>

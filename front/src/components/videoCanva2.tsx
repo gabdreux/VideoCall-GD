@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { SocketContext } from '@/socketContext';
 
 
@@ -7,18 +7,36 @@ const VideoCanva2: React.FC = () => {
 
     const context = useContext(SocketContext);
 
-
     
 
-      useEffect(() => {
+      useEffect(() => {       
+
         if (!context) return;
 
-        const { me, callAccepted, callEnded, stream } = context;
 
-        console.log('callAccepted-VC2:', callAccepted);
-        console.log('callEnded-VC2:', callEnded);
-        console.log('STREAM-VC2:', stream);
-        console.log("ME-VC2:", me);
+        // const storedIdToCall = sessionStorage.getItem("idToCall");
+        // const storedName = sessionStorage.getItem("name");
+        // const storedMe = sessionStorage.getItem("me");
+
+        // console.log("Stored ID-TO-CALL:", storedIdToCall);
+        // console.log("Stored NAME:", storedName);
+        // console.log("Stored ME:", storedMe);
+
+
+
+        const { callUser, callAccepted, callEnded, stream } = context;
+        // const me = storedMe;
+
+
+        // if (storedIdToCall && storedMe) {
+        //   callUser(storedIdToCall);
+
+        // }
+
+        // console.log('callAccepted-VC2:', callAccepted);
+        // console.log('callEnded-VC2:', callEnded);
+        // console.log('STREAM-VC2:', stream);
+        // console.log("ME-VC2:", me);
 
         // Capture the stream and set it to video elements
         if (stream) {
@@ -32,13 +50,25 @@ const VideoCanva2: React.FC = () => {
         }
     }, [context]);
 
+
+
+
+
+
     if (!context) {
         return null;
     }
 
 
-    const { name, callAccepted, myVideo, userVideo, callEnded, stream, call } =  context;
+    const {  callAccepted, name, setName, callEnded, leaveCall, callUser, stream, call,  myVideo, userVideo,  } =  context;
+    const [idToCall, setIdToCall] = useState('');
+
+
+    // const { me, callAccepted, name, setName, callEnded, leaveCall, callUser } = context;
     
+    
+
+
     
     return (
 

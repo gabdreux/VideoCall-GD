@@ -22,6 +22,9 @@ const VideoCallMenu: React.FC = () => {
               </div>
     
     
+
+
+    
     
               <div className="col-sm-12 col-md-12 col-lg-4 callButtonsDiv">
                 <button><i className='far fa-comment'></i></button>
@@ -31,6 +34,9 @@ const VideoCallMenu: React.FC = () => {
               </div>
     
     
+
+
+
     
               <div className="col-sm-12 col-md-12 col-lg-4">
                 Column 3

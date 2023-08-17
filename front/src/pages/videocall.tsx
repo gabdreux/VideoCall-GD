@@ -20,6 +20,8 @@ const VideoCall: React.FC = () => {
 
       <Alerta><Notifications/></Alerta>
 
+      <Notifications></Notifications>
+
       <div>
         <VideoCanva2 />
       </div>

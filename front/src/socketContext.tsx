@@ -1,6 +1,7 @@
 import React, { createContext, useState, useRef, useEffect, ReactNode } from 'react';
 import { io, Socket } from 'socket.io-client';
 import Peer from 'simple-peer';
+import { Console } from 'console';
 
 interface Call {
   isReceivingCall: boolean;
@@ -19,6 +20,7 @@ interface ContextProps {
   setName: React.Dispatch<React.SetStateAction<string>>;
   callEnded: boolean;
   me: string;
+  setMe: React.Dispatch<React.SetStateAction<string>>;
   callUser: (id: string) => void;
   leaveCall: () => void;
   answerCall: () => void;
@@ -46,8 +48,11 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const userVideo = useRef<HTMLVideoElement>(null);
   const connectionRef = useRef<Peer.Instance | null>(null);
 
-  const idTocall = 'gabriel';
+  const idTocall = '';
 
+
+
+  
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -57,12 +62,25 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         if (myVideo.current) {
           myVideo.current.srcObject = currentStream;
         }
+
+
+        // const LS_____userId = localStorage.getItem('userId');
+        // console.log(LS_____userId);
+      
+      
+        // if (LS_____userId !== null) {
+        //   setMe(LS_____userId);
+        // }
+
+
+        // setMe(currentStream.id);
+
+
       });
 
 
 
     socket.on('me', (id: string) => setMe(id));
-
 
     console.log("ME-CONTEXT:", me);
     
@@ -71,7 +89,10 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
 
     });
+
+
   }, []);
+
 
 
 
@@ -113,13 +134,13 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     console.log("CHAMOU LIGAÇÃO!");
 
-
+    console.log("ME-CONTEXT:", me);
 
     peer.on('signal', (data) => {
       socket.emit('callUser', { userToCall: id, signalData: data, from: me, name });
     });
 
-    console.log("data:", id, me, name);
+    console.log("DATA:", "ID:", id, "ME:", me, "NAME:", name);
 
 
     peer.on('stream', (currentStream) => {
@@ -146,6 +167,8 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
 
 
+
+
   const leaveCall = () => {
     setCallEnded(true);
 
@@ -156,6 +179,12 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     window.location.reload();
   };
 
+
+
+
+  const setMyUserId = (userId: string) => {
+    setMe(userId);
+  };
 
 
 
@@ -171,6 +200,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setName,
     callEnded,
     me,
+    setMe,
     callUser,
     leaveCall,
     answerCall,

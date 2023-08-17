@@ -73,30 +73,6 @@ app.get('/', (req, res) => {
 
 
 
-io.on("connection", (socket) => {
-	socket.emit("me", socket.id);
-
-	socket.on("disconnect", () => {
-		socket.broadcast.emit("callEnded")
-	});
-
-	socket.on("callUser", ({ userToCall, signalData, from, name }) => {
-		io.to(userToCall).emit("callUser", { signal: signalData, from, name });
-	});
-
-	socket.on("answerCall", (data) => {
-		io.to(data.to).emit("callAccepted", data.signal)
-	});
-});
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 const fs = require('fs');
 const path = require('path');
@@ -123,8 +99,37 @@ function getUser () {
 }
 
 
+const socketToUser = {};
 
 
+io.on("connection", (socket) => {
+
+
+	socket.emit("me", socket.id);
+
+	socket.on("disconnect", () => {
+		socket.broadcast.emit("callEnded")
+	});
+
+	socket.on("callUser", ({ userToCall, signalData, from, name }) => {
+		io.to(userToCall).emit("callUser", { signal: signalData, from, name });
+	});
+
+	socket.on("answerCall", (data) => {
+		io.to(data.to).emit("callAccepted", data.signal)
+	});
+
+
+
+
+});
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -142,7 +147,8 @@ app.get('/api/user', (req, res) => {
 
 //Rota de login
 app.post('/api/login', (req, res) => {
-	const { email, senha } = req.body; // Supondo que você esteja usando um middleware para analisar o corpo da solicitação
+
+	const { email, senha } = req.body;
   
 	const users = getUsers();
 	const user = users.find(u => u.email === email && u.senha === senha);
@@ -151,8 +157,7 @@ app.post('/api/login', (req, res) => {
 	  return res.status(401).json({ message: 'Credenciais inválidas' });
 	}
   
-	// Se a autenticação for bem-sucedida, você pode retornar um token ou apenas um status 200
-	res.status(200).json({ message: 'Login bem-sucedido' });
+	res.status(200).json({ message: 'Login bem-sucedido', userId: user.id });
   });
   
 

@@ -19,6 +19,8 @@ const Alerta: React.FC<AlertProps> = ({ children }) => {
   const { me, callAccepted, name, setName, callEnded, leaveCall, callUser } = context;
   const [idToCall, setIdToCall] = useState('');
 
+  
+
   return (
     <div>
       <div>
