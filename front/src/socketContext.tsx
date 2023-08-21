@@ -32,7 +32,9 @@ interface ContextProps {
 
 
 // const socket: Socket = socketConnection;
-const socket: Socket = io('http://localhost:5000/');
+// const socket: Socket = io('http://localhost:5000/');
+
+
 
 
 
@@ -40,7 +42,6 @@ const SocketContext = createContext<ContextProps | null>(null);
 
 
 
-const SERVER_URL = 'http://localhost:5000';
 
 
 
@@ -61,44 +62,15 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const idTocall = '';
 
-
-  
-  // socket.on('me', (id: string) => setMe(id));
-
-
-  // console.log('socket ID', me);
-    
-
-  // socket.on('callUser', ({ from, name: callerName, signal }: Call) => {
-  //   setCall({ isReceivingCall: true, from, name: callerName, signal });
-
-  // });
-
-
-  
-
-  // useEffect(() => {
-
-  //   socket.on('me', (id: string) => setMe(id));
-
-  //   console.log('socket ID', me);
-    
-  //   socket.on('callUser', ({ from, name: callerName, signal }: Call) => {
-  //     setCall({ isReceivingCall: true, from, name: callerName, signal });
-
-  //   });
-
-
-  // }, []);
-
-
+  const [socket, setSocket] = useState<Socket | null>(null);
 
 
   const [socketId, setSocketId] = useState<string | null>(null);
 
 
     useEffect(() => {
-    const socket = io(SERVER_URL);
+
+    const socket = io('http://localhost:5000');
 
     socket.on('connect', () => {
       console.log('Connected to server');
@@ -159,7 +131,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
     peer.on('signal', (data) => {
-      socket.emit('answerCall', { signal: data, to: call.from });
+      // socket.emit('answerCall', { signal: data, to: call.from });
     });
 
     peer.on('stream', (currentStream) => {
@@ -180,7 +152,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const callUser = (id: any) => {
 
-    socket.on('me', (id: any) => setMe(id));
+    // socket.on('me', (id: any) => setMe(id));
 
     const peer = new Peer({ initiator: true, trickle: false, stream });
 
@@ -189,7 +161,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     console.log("CHAMOU LIGAÇÃO!");
 
     peer.on('signal', (data) => {
-      socket.emit('callUser', { userToCall: id, signalData: data, from: me, name });
+      // socket.emit('callUser', { userToCall: id, signalData: data, from: me, name });
     });
 
     console.log("DATA:" , "userToCallID:", id, "ME:", me, "NAME:", name);
@@ -202,13 +174,13 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     });
 
-    socket.on('callAccepted', (signal: any) => {
-      console.log("Inside callAccepted socket event:", callAccepted);
-      setCallAccepted(true);
-      console.log("After setting callAccepted:", callAccepted);
-      peer.signal(signal);
+    // socket.on('callAccepted', (signal: any) => {
+    //   console.log("Inside callAccepted socket event:", callAccepted);
+    //   setCallAccepted(true);
+    //   console.log("After setting callAccepted:", callAccepted);
+    //   peer.signal(signal);
 
-    });
+    // });
 
     connectionRef.current = peer;
     console.log("userVideo:", userVideo);

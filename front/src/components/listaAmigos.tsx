@@ -4,10 +4,6 @@ import axios from "axios";
 // import { id } from "date-fns/locale";
 
 
-// import io from 'socket.io-client';
-
-// const SERVER_URL = 'http://localhost:5000';
-
 
 
 type User = {
@@ -43,27 +39,7 @@ const ListaAmigos: React.FC = () => {
   
 
 
-  const [socketId, setSocketId] = useState<string | null>(null);
-
-
-
-  // useEffect(() => {
-  //   const socket = io(SERVER_URL);
-
-  //   socket.on('connect', () => {
-  //     console.log('Connected to server');
-  //     setSocketId(socket.id);
-  //     console.log(socket.id);
-  //   });
-
-  //   socket.on('disconnect', () => {
-  //     console.log('Disconnected from server');
-  //   });
-
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
+  // const [socketId, setSocketId] = useState<string | null>(null);
 
 
 
@@ -93,8 +69,6 @@ const ListaAmigos: React.FC = () => {
 
 
     // callUser(idToCall);
-
-    // console.log('Conexão estabelecida:', socket.connected);
 
     
     if (context) {
