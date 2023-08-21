@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import { SocketContext } from '@/socketContext';
 
 
 const Login: React.FC = () => {
@@ -8,9 +7,6 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
-
-  const context = useContext(SocketContext);
 
 
 
@@ -24,7 +20,6 @@ const Login: React.FC = () => {
         console.log('Login bem-sucedido');
         
         // localStorage.setItem('userId', response.data.userId);
-      
 
         window.location.href = '/user-area';
 

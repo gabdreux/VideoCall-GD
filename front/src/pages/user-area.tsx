@@ -7,7 +7,7 @@ import { SocketContext } from '@/socketContext';
 
 const UserAera: React.FC = () => {
 
-  const context = useContext(SocketContext);
+//   const context = useContext(SocketContext);
 
   
 
@@ -19,7 +19,8 @@ const UserAera: React.FC = () => {
 
   return (
 
-  <ContextProvider>  
+    <ContextProvider>
+
     <div className="container text-center">
       <div className="row align-items-start containerDiv">
 
@@ -91,8 +92,10 @@ const UserAera: React.FC = () => {
 
       </div>
     </div>
-  </ContextProvider>  
+    
+    </ContextProvider>
 
+    
   );
 };
 

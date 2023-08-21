@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { SocketContext } from '@/socketContext';
 import axios from "axios";
-import { id } from "date-fns/locale";
+// import { id } from "date-fns/locale";
+
+
+// import io from 'socket.io-client';
+
+// const SERVER_URL = 'http://localhost:5000';
+
 
 
 type User = {
@@ -10,6 +16,10 @@ type User = {
   email: string;
   // outros campos...
 };
+
+
+
+
 
 const ListaAmigos: React.FC = () => {
 
@@ -33,15 +43,41 @@ const ListaAmigos: React.FC = () => {
   
 
 
+  const [socketId, setSocketId] = useState<string | null>(null);
+
+
+
+  // useEffect(() => {
+  //   const socket = io(SERVER_URL);
+
+  //   socket.on('connect', () => {
+  //     console.log('Connected to server');
+  //     setSocketId(socket.id);
+  //     console.log(socket.id);
+  //   });
+
+  //   socket.on('disconnect', () => {
+  //     console.log('Disconnected from server');
+  //   });
+
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
+
+
+
+
+
+
   const context = useContext(SocketContext);
 
   if (!context) {
     return null;
   }
 
-  const { me, name, setName, callUser } = context;
+  const { me, setMe, name, setName, callUser } = context;
   const [idToCall, setIdToCall] = useState('');
-
 
 
 
@@ -58,7 +94,9 @@ const ListaAmigos: React.FC = () => {
 
     // callUser(idToCall);
 
+    // console.log('Conexão estabelecida:', socket.connected);
 
+    
     if (context) {
       console.log('Valor de me:', context.me);
     }
@@ -82,7 +120,7 @@ const ListaAmigos: React.FC = () => {
           <h4>Amigos:</h4>
         </a>
 
-
+    
 
         <div className="container text-center">
           {friends.map((friend) => (

@@ -1,7 +1,8 @@
 import React, { createContext, useState, useRef, useEffect, ReactNode } from 'react';
 import { io, Socket } from 'socket.io-client';
 import Peer from 'simple-peer';
-import { Console } from 'console';
+import socketConnection from './socketConnection';
+
 
 interface Call {
   isReceivingCall: boolean;
@@ -19,18 +20,28 @@ interface ContextProps {
   name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
   callEnded: boolean;
-  me: string;
-  setMe: React.Dispatch<React.SetStateAction<string>>;
+  me: any;
+  setMe: React.Dispatch<React.SetStateAction<any>>;
   callUser: (id: string) => void;
   leaveCall: () => void;
   answerCall: () => void;
   idTocall: string;
 
+
 }
+
+
+// const socket: Socket = socketConnection;
+const socket: Socket = io('http://localhost:5000/');
+
+
 
 const SocketContext = createContext<ContextProps | null>(null);
 
-const socket: Socket = io('http://localhost:5000/');
+
+
+const SERVER_URL = 'http://localhost:5000';
+
 
 
 
@@ -51,52 +62,92 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const idTocall = '';
 
 
+  
+  // socket.on('me', (id: string) => setMe(id));
+
+
+  // console.log('socket ID', me);
+    
+
+  // socket.on('callUser', ({ from, name: callerName, signal }: Call) => {
+  //   setCall({ isReceivingCall: true, from, name: callerName, signal });
+
+  // });
+
 
   
 
-  useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-      .then((currentStream) => {
-        setStream(currentStream);
+  // useEffect(() => {
 
-        if (myVideo.current) {
-          myVideo.current.srcObject = currentStream;
-        }
+  //   socket.on('me', (id: string) => setMe(id));
 
-
-        // const LS_____userId = localStorage.getItem('userId');
-        // console.log(LS_____userId);
-      
-      
-        // if (LS_____userId !== null) {
-        //   setMe(LS_____userId);
-        // }
-
-
-        // setMe(currentStream.id);
-
-
-      });
-
-
-
-    socket.on('me', (id: string) => setMe(id));
-
-    console.log("ME-CONTEXT:", me);
+  //   console.log('socket ID', me);
     
+  //   socket.on('callUser', ({ from, name: callerName, signal }: Call) => {
+  //     setCall({ isReceivingCall: true, from, name: callerName, signal });
 
-    socket.on('callUser', ({ from, name: callerName, signal }: Call) => {
-      setCall({ isReceivingCall: true, from, name: callerName, signal });
+  //   });
 
+
+  // }, []);
+
+
+
+
+  const [socketId, setSocketId] = useState<string | null>(null);
+
+
+    useEffect(() => {
+    const socket = io(SERVER_URL);
+
+    socket.on('connect', () => {
+      console.log('Connected to server');
+      setSocketId(socket.id);
+      setMe(socket.id);
+      console.log(me);
+      console.log(socket.id);
     });
 
+    socket.on('disconnect', () => {
+      console.log('Disconnected from server');
+    });
 
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+  const askPermission = () => {
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    .then((currentStream) => {
+      setStream(currentStream);
+
+      if (myVideo.current) {
+        myVideo.current.srcObject = currentStream;
+      }
+
+    });
+
+  };
+
+
+
+  
 
   const answerCall = () => {
 
@@ -125,22 +176,23 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
 
 
+  
 
+  const callUser = (id: any) => {
 
-  const callUser = (id: string) => {
+    socket.on('me', (id: any) => setMe(id));
+
     const peer = new Peer({ initiator: true, trickle: false, stream });
 
     console.log("peer:", peer);
 
     console.log("CHAMOU LIGAÇÃO!");
 
-    console.log("ME-CONTEXT:", me);
-
     peer.on('signal', (data) => {
       socket.emit('callUser', { userToCall: id, signalData: data, from: me, name });
     });
 
-    console.log("DATA:", "ID:", id, "ME:", me, "NAME:", name);
+    console.log("DATA:" , "userToCallID:", id, "ME:", me, "NAME:", name);
 
 
     peer.on('stream', (currentStream) => {
@@ -182,9 +234,10 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
 
 
-  const setMyUserId = (userId: string) => {
-    setMe(userId);
-  };
+  // const setMyUserId = (userId: string) => {
+  //   setMe(userId);
+  // };
+
 
 
 
@@ -210,16 +263,21 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   
 
+
+  
+
   return (
 
     <SocketContext.Provider value={contextValue}>
       {children}
     </SocketContext.Provider>
 
+
   );
 
 
 };
+
 
 
 

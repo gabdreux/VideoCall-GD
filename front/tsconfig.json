@@ -23,6 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/socketContext.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/socketContext.tsx", "src/newContext.js", "src/pages/newContext.jsx", "src/components/videoMenu.tsx"],
   "exclude": ["node_modules"]
 }

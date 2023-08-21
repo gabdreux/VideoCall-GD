@@ -65,10 +65,13 @@ const PORT = process.env.PORT || 5000;
 // });
 
 
-app.get('/', (req, res) => {
-	res.send('Running');
-	console.log('Running');
-});
+
+
+
+// app.get('/', (req, res) => {
+// 	res.send('Running');
+// 	console.log('Running');
+// });
 
 
 
@@ -99,13 +102,22 @@ function getUser () {
 }
 
 
-const socketToUser = {};
+
+
+
+
+// const socketToUser = {};
 
 
 io.on("connection", (socket) => {
 
 
-	socket.emit("me", socket.id);
+	socket.emit("me", socket.id, console.log('Novo cliente conectado:', socket.id));
+
+	socket.on("me", () => {
+		console.log('Novo cliente conectado:', socket.id);
+	});
+
 
 	socket.on("disconnect", () => {
 		socket.broadcast.emit("callEnded")
@@ -118,7 +130,6 @@ io.on("connection", (socket) => {
 	socket.on("answerCall", (data) => {
 		io.to(data.to).emit("callAccepted", data.signal)
 	});
-
 
 
 
