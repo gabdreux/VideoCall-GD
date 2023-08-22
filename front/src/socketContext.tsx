@@ -1,7 +1,7 @@
 import React, { createContext, useState, useRef, useEffect, ReactNode } from 'react';
 import { io, Socket } from 'socket.io-client';
 import Peer from 'simple-peer';
-import socketConnection from './socketConnection';
+
 
 
 interface Call {
@@ -32,7 +32,7 @@ interface ContextProps {
 
 
 // const socket: Socket = socketConnection;
-// const socket: Socket = io('http://localhost:5000/');
+const socket: Socket = io('http://localhost:5000/');
 
 
 
@@ -62,35 +62,36 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const idTocall = '';
 
-  const [socket, setSocket] = useState<Socket | null>(null);
-
-
-  const [socketId, setSocketId] = useState<string | null>(null);
+  const [socket2, setSocket2] = useState<Socket | null>(null);
 
 
     useEffect(() => {
 
-    const socket = io('http://localhost:5000');
+    const socket2 = io('http://localhost:5000');
 
-    socket.on('connect', () => {
+    socket2.on('me', () => {
       console.log('Connected to server');
-      setSocketId(socket.id);
       setMe(socket.id);
       console.log(me);
-      console.log(socket.id);
+      console.log(socket2.id);
     });
 
-    socket.on('disconnect', () => {
+    socket2.on('disconnect', () => {
       console.log('Disconnected from server');
     });
 
+
+    
+    socket.on('callUser', ({ from, name: callerName, signal }: Call) => {
+      setCall({ isReceivingCall: true, from, name: callerName, signal });
+
+    });
+
+
     return () => {
-      socket.disconnect();
+      socket2.disconnect();
     };
   }, []);
-
-
-
 
 
 
@@ -123,6 +124,12 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const answerCall = () => {
 
+    askPermission();
+
+    if (!socket) {
+      console.log("Socket não está inicializado.");
+      return;
+  };
 
     console.log("Before setting callAccepted:", callAccepted);
     setCallAccepted(true);
@@ -131,7 +138,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
     peer.on('signal', (data) => {
-      // socket.emit('answerCall', { signal: data, to: call.from });
+      socket.emit('answerCall', { signal: data, to: call.from });
     });
 
     peer.on('stream', (currentStream) => {
@@ -150,9 +157,12 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   
 
-  const callUser = (id: any) => {
+  const callUser = (id: string) => {
 
-    // socket.on('me', (id: any) => setMe(id));
+    if (!socket) {
+      console.log("Socket não está inicializado.");
+      return;
+  };
 
     const peer = new Peer({ initiator: true, trickle: false, stream });
 
@@ -161,7 +171,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     console.log("CHAMOU LIGAÇÃO!");
 
     peer.on('signal', (data) => {
-      // socket.emit('callUser', { userToCall: id, signalData: data, from: me, name });
+      socket.emit('callUser', { userToCall: id, signalData: data, from: me, name });
     });
 
     console.log("DATA:" , "userToCallID:", id, "ME:", me, "NAME:", name);
@@ -174,13 +184,13 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     });
 
-    // socket.on('callAccepted', (signal: any) => {
-    //   console.log("Inside callAccepted socket event:", callAccepted);
-    //   setCallAccepted(true);
-    //   console.log("After setting callAccepted:", callAccepted);
-    //   peer.signal(signal);
+    socket.on('callAccepted', (signal: any) => {
+      console.log("Inside callAccepted socket event:", callAccepted);
+      setCallAccepted(true);
+      console.log("After setting callAccepted:", callAccepted);
+      peer.signal(signal);
 
-    // });
+    });
 
     connectionRef.current = peer;
     console.log("userVideo:", userVideo);

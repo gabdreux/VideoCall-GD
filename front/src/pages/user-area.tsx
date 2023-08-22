@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import ListaAmigos from '@/components/listaAmigos';
 import { ContextProvider } from '@/socketContext';
-import { SocketContext } from '@/socketContext';
+import VideoCall from '@/components/videocall';
 
 
 
@@ -19,7 +19,7 @@ const UserAera: React.FC = () => {
 
   return (
 
-    // <ContextProvider>
+    <ContextProvider>
     <div className="container text-center">
       <div className="row align-items-start containerDiv">
 
@@ -92,7 +92,10 @@ const UserAera: React.FC = () => {
       </div>
     </div>
 
-    // </ContextProvider>
+
+    <VideoCall />
+
+  </ContextProvider>
     
 
     

@@ -1,73 +1,51 @@
-// import React, { useContext } from 'react';
-// import { SocketContext } from '@/socketContext';
+import React from 'react';
 
 
-// const VideoCallMenu: React.FC = () => {
 
-
-//   const context = useContext(SocketContext);
-
-//   if (!context) {
-//     return null;
-//   }
-
-
-//   const { me } = context;
-
-
+const VideoCallMenu: React.FC = () => {
 
   
-//     const handlePowerOff = () => {
-//         // window.location.href = '/user-area';
-//         if (context) {
-//           console.log('Valor de me:', context.me);
-//         }
-//       };
+    const handlePowerOff = () => {
+        window.location.href = '/user-area';
+      };
 
+    return (
 
-//     return (
+        <div className="videocallMenu">
 
-//         <div className="videocallMenu">
-
-//         <div className="container text-center">
-//             <div className="row">
+        <div className="container text-center">
+            <div className="row">
     
     
-//               <div className="col-sm-12 col-md-12 col-lg-4">
-//                 Column 1
-//               </div>
+              <div className="col-sm-12 col-md-12 col-lg-4">
+                Column 1
+              </div>
     
     
-
-
+    
+              <div className="col-sm-12 col-md-12 col-lg-4 callButtonsDiv">
+                <button><i className='far fa-comment'></i></button>
+                <button className='powerOff' onClick={handlePowerOff}><i className='fas fa-power-off'></i></button>
+                <button className='banAlert'><i className='fas fa-exclamation-circle'></i></button>
+                <button className='bolinMenu'><i className='fas fa-ellipsis-v'></i></button>
+              </div>
     
     
-//               <div className="col-sm-12 col-md-12 col-lg-4 callButtonsDiv">
-//                 <button><i className='far fa-comment'></i></button>
-//                 <button className='powerOff' onClick={handlePowerOff}><i className='fas fa-power-off'></i></button>
-//                 <button className='banAlert'><i className='fas fa-exclamation-circle'></i></button>
-//                 <button className='bolinMenu'><i className='fas fa-ellipsis-v'></i></button>
-//               </div>
+    
+              <div className="col-sm-12 col-md-12 col-lg-4">
+                Column 3
+              </div>
     
     
-
-
-
-    
-//               <div className="col-sm-12 col-md-12 col-lg-4">
-//                 Column 3
-//               </div>
+            </div>
+        </div>
     
     
-//             </div>
-//         </div>
-    
-    
-//       </div>
+      </div>
 
       
-//     );
+    );
 
-// };
+};
 
-// export default VideoCallMenu;
+export default VideoCallMenu;
