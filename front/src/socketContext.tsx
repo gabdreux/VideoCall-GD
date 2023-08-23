@@ -11,7 +11,7 @@ interface Call {
   signal: any;
 }
 
-interface ContextProps {
+export interface ContextProps {
   call: Call;
   callAccepted: boolean;
   myVideo: React.RefObject<HTMLVideoElement>;
@@ -62,7 +62,6 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const idTocall = '';
 
-  const [socket2, setSocket2] = useState<Socket | null>(null);
 
 
     useEffect(() => {

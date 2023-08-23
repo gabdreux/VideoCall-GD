@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import ListaAmigos from '@/components/listaAmigos';
 import { ContextProvider } from '@/socketContext';
 import VideoCall from '@/components/videocall';
+import { SocketContext } from '@/socketContext';
+
 
 
 
@@ -15,18 +17,25 @@ const UserAera: React.FC = () => {
   };
 
 
+  // const context = useContext(SocketContext);
+  // const contextValue = useSocketContext();
+
+
 
 
   return (
 
+    
     <ContextProvider>
+
+    <div>
     <div className="container text-center">
       <div className="row align-items-start containerDiv">
 
 
 
 
-        <ListaAmigos></ListaAmigos>
+        {/* <ListaAmigos></ListaAmigos> */}
 
 
 
@@ -95,8 +104,10 @@ const UserAera: React.FC = () => {
 
     <VideoCall />
 
-  </ContextProvider>
+  </div>
     
+</ContextProvider>
+
 
     
   );

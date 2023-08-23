@@ -44,7 +44,7 @@ const PORT = process.env.PORT || 5000;
 
 // // Rota para renderizar uma sala existente
 // app.get('/:room', (req, res) => {
-//   res.render('room', { roomId: req.params.room }) // Renderiza o modelo 'room' com o ID da sala
+//   res.render('room', { roomId: req.params.room }) // Renderiza a página 'room' com o ID da sala
 
 // });
 

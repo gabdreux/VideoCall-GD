@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { SocketContext } from '@/socketContext';
 import axios from "axios";
-// import { id } from "date-fns/locale";
 
 
 
@@ -46,16 +45,16 @@ const ListaAmigos: React.FC = () => {
 
 
 
-  const context = useContext(SocketContext);
+  // const context = useContext(SocketContext);
 
-  if (!context) {
-    return null;
-  }
+  // if (!context) {
+  //   return null;
+  // }
 
-  const { me, setMe, name, setName, callUser } = context;
-  const [idToCall, setIdToCall] = useState('');
+  // const { me, setMe, name, setName, callUser } = context;
+  // const [idToCall, setIdToCall] = useState('');
 
-
+  // const context = useSocketContext();
 
   
   const callHandler = () => {
@@ -71,9 +70,9 @@ const ListaAmigos: React.FC = () => {
     // callUser(idToCall);
 
     
-    if (context) {
-      console.log('Valor de me:', context.me);
-    }
+    // if (context) {
+    //   console.log('Valor de me:', context.me);
+    // }
 
     // window.location.href = '/videocall';
   }
