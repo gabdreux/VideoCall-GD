@@ -26,13 +26,13 @@ export interface ContextProps {
   leaveCall: () => void;
   answerCall: () => void;
   idTocall: string;
-
+  initializeSockets: () => void
 
 }
 
 
-// const socket: Socket = socketConnection;
-const socket: Socket = io('http://localhost:5000/');
+
+// const socket: Socket = io('http://localhost:5000/');
 
 
 
@@ -63,34 +63,42 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const idTocall = '';
 
 
+    const [socket, setSocket] = useState<Socket | null>(null);
 
-    useEffect(() => {
 
-    const socket2 = io('http://localhost:5000');
 
-    socket2.on('me', () => {
+    const initializeSockets = () => {
+
+      const newSocket = io('http://localhost:5000/');
+      setSocket(newSocket);
+
+    // const socket2 = io('http://localhost:5000');
+
+    newSocket.on('me', () => {
       console.log('Connected to server');
-      setMe(socket.id);
+      setMe(newSocket.id);
       console.log(me);
-      console.log(socket2.id);
+      console.log(newSocket.id);
     });
 
-    socket2.on('disconnect', () => {
+    newSocket.on('disconnect', () => {
       console.log('Disconnected from server');
     });
 
 
     
-    socket.on('callUser', ({ from, name: callerName, signal }: Call) => {
+    newSocket.on('callUser', ({ from, name: callerName, signal }: Call) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
 
     });
 
 
     return () => {
-      socket2.disconnect();
+      newSocket.disconnect();
     };
-  }, []);
+
+
+  };
 
 
 
@@ -157,6 +165,9 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   
 
   const callUser = (id: string) => {
+
+
+    // inicilizeSockets();
 
     if (!socket) {
       console.log("Socket não está inicializado.");
@@ -239,6 +250,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     leaveCall,
     answerCall,
     idTocall,
+    initializeSockets,
 
   };
 

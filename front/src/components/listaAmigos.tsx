@@ -38,21 +38,16 @@ const ListaAmigos: React.FC = () => {
   
 
 
-  // const [socketId, setSocketId] = useState<string | null>(null);
 
 
+  const context = useContext(SocketContext);
 
+  if (!context) {
+    return null;
+  }
 
-
-
-  // const context = useContext(SocketContext);
-
-  // if (!context) {
-  //   return null;
-  // }
-
-  // const { me, setMe, name, setName, callUser } = context;
-  // const [idToCall, setIdToCall] = useState('');
+  const { me, setMe, name, setName, callUser, initializeSockets } = context;
+  const [idToCall, setIdToCall] = useState('');
 
   // const context = useSocketContext();
 
@@ -69,11 +64,13 @@ const ListaAmigos: React.FC = () => {
 
     // callUser(idToCall);
 
-    
-    // if (context) {
-    //   console.log('Valor de me:', context.me);
-    // }
+    initializeSockets();
 
+    
+    if (context) {
+      console.log('Valor de me:', context.me);
+    }
+    console.log('Valor de me2:', context.me);
     // window.location.href = '/videocall';
   }
 

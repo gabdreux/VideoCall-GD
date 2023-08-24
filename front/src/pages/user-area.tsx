@@ -14,11 +14,9 @@ const UserAera: React.FC = () => {
 
   const handleChamadaClick = () => {
     window.location.href = '/videocall';
+
   };
 
-
-  // const context = useContext(SocketContext);
-  // const contextValue = useSocketContext();
 
 
 
@@ -35,7 +33,7 @@ const UserAera: React.FC = () => {
 
 
 
-        {/* <ListaAmigos></ListaAmigos> */}
+        <ListaAmigos></ListaAmigos>
 
 
 
