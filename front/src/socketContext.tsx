@@ -67,6 +67,8 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
 
 
+    
+
     const initializeSockets = () => {
 
       const newSocket = io('http://localhost:5000/');
@@ -97,6 +99,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       newSocket.disconnect();
     };
 
+    
 
   };
 
@@ -220,15 +223,11 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       connectionRef.current.destroy();
     }
 
-    window.location.reload();
+    // window.location.reload();
   };
 
 
 
-
-  // const setMyUserId = (userId: string) => {
-  //   setMe(userId);
-  // };
 
 
 

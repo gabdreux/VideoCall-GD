@@ -5,6 +5,8 @@ import '../app/responsive.css';
 import Header from '../components/header';
 import Footer from '../components/footer';
 
+import { AuthProvider } from '../authContext';
+
 
 
 
@@ -15,13 +17,15 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
 
+    <AuthProvider>
     <div>
 
-        {/* <Header /> */}
+        <Header />
         <Component {...pageProps} />
         {/* <Footer /> */}
 
     </div>
+    </AuthProvider>
         
   );
 }

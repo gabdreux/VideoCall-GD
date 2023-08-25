@@ -18,6 +18,17 @@ const io = require("socket.io")(server, {
 });
 
 
+
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const config = require('./config');
+
+
+
+const cookieParser = require('cookie-parser');
+app.use(cookieParser())
+
+
 app.use(cors());
 
 app.use(express.json());
@@ -27,6 +38,18 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 // Configura o middleware para servir arquivos estáticos
 app.use(express.static('public'));
+
+
+
+const fs = require('fs');
+const path = require('path');
+
+const dataFilePath = path.join(__dirname, 'data', 'database.json');
+
+
+
+
+
 
 const PORT = process.env.PORT || 5000;
 
@@ -77,12 +100,6 @@ app.get('/', (req, res) => {
 
 
 
-const fs = require('fs');
-const path = require('path');
-
-const dataFilePath = path.join(__dirname, 'data', 'database.json');
-
-
 //Pega os dados de todos os usuários no "db"
 function getUsers () {
   const rawData = fs.readFileSync(dataFilePath);
@@ -90,6 +107,14 @@ function getUsers () {
   return data.users;
 
 }
+
+
+function saveUsers (users) {
+	const data = { users };
+	fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
+
+  }
+
 
 
 
@@ -158,21 +183,136 @@ app.get('/api/user', (req, res) => {
 
 
 
-//Rota de login
-app.post('/api/login', (req, res) => {
 
+// Rota de registro
+app.post("/register", async (req, res) => {
+	const { userName, pwd, email } = req.body;
+  
+	const token = await bcrypt.hash(pwd, 10);
+  
+	const users = getUsers();
+  
+	const userAlreadyExists = users.find(u => u.email === email);
+  
+	if (userAlreadyExists) {
+	  console.log("Esse username já está sendo usado");
+	  return res.status(409).json("Username already taken");
+	}
+  
+	const newUser = {
+		id: users.length + 1,
+		name: userName,
+		email: email,
+		senha: token,
+		friends: [],
+	  };
+  
+	users.push(newUser);
+	saveUsers(users);
+  
+	console.log("usuário criado com sucesso!");
+
+	
+	const responseUser = {
+		id: newUser.id,
+		name: newUser.name,
+		email: newUser.email,
+		senha: newUser.senha,
+		friends: newUser.friends,
+	  };  
+
+
+	return res.status(201).json(responseUser);
+
+  });
+
+
+
+
+  // Middleware de verificação do token
+function verifyToken(req, res, next) {
+	const token = req.header('Authorization');
+  
+	if (!token) {
+	  return res.status(401).json({ message: 'Token não fornecido' });
+	}
+  
+	try {
+	  const decoded = jwt.verify(token, config.jwtSecret);
+	  req.userId = decoded.userId;
+	  next();
+	} catch (err) {
+	  return res.status(403).json({ message: 'Token inválido' });
+	}
+  }
+
+
+
+  
+
+
+//Rota de login
+app.post('/api/login', async (req, res) => {
 	const { email, senha } = req.body;
   
 	const users = getUsers();
-	const user = users.find(u => u.email === email && u.senha === senha);
+	const user = users.find(u => u.email === email);
   
 	if (!user) {
 	  return res.status(401).json({ message: 'Credenciais inválidas' });
 	}
   
-	res.status(200).json({ message: 'Login bem-sucedido', userId: user.id });
+	// Usando bcrypt para comparar a senha fornecida com a senha armazenada
+	const isPasswordValid = await bcrypt.compare(senha, user.senha);
+  
+	if (!isPasswordValid) {
+	  return res.status(401).json({ message: 'Credenciais inválidas' });
+	}
+
+	const token = jwt.sign({ userId: user.id }, config.jwtSecret, { expiresIn: '1h' });
+
+	  // Configurar o cookie HttpOnly
+	  res.cookie('token', token, {
+		httpOnly: true,
+		// Outras opções do cookie, como "secure" para HTTPS
+		maxAge: 3600000,
+	  });
+
+	console.log('Token configurado:', token);
+	res.status(200).json({ message: 'Login bem-sucedido', userId: user.id, token: token });
   });
   
+
+
+
+
+
+
+
+
+// Rota de logout
+app.post('/api/logout', (req, res) => {
+
+  
+	// Limpe o cookie contendo o token no lado do cliente
+	res.clearCookie('token');
+  
+
+	res.status(200).json({ message: 'Logout bem-sucedido' });
+
+
+	res.redirect('/login');
+	
+
+  });
+
+
+
+
+
+
+
+
 
 
 
@@ -193,6 +333,44 @@ app.post('/api/login', (req, res) => {
 	res.json(friends);
 
   });
+
+
+
+
+
+// app.get('/api/friends', (req, res) => {
+// 	const token = req.headers.authorization;
+  
+// 	if (!token) {
+// 	  return res.status(401).json({ message: 'Token ausente' });
+// 	}
+  
+// 	try {
+// 	  const decoded = jwt.verify(token, 'seuSegredoDoToken');
+// 	  const userId = decoded.id;
+  
+// 	  const users = getUsers();
+// 	  const currentUser = users.find(user => user.id === userId);
+  
+// 	  if (!currentUser) {
+// 		return res.status(404).json({ message: 'Usuário não encontrado' });
+// 	  }
+  
+// 	  const friends = currentUser.friends.map(friendId => {
+// 		return users.find(user => user.id === friendId);
+// 	  });
+  
+// 	  res.json(friends);
+// 	} catch (error) {
+// 	  res.status(401).json({ message: 'Token inválido' });
+// 	}
+	
+//   });
+  
+
+
+
+
 
 
 

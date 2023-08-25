@@ -22,19 +22,37 @@ const ListaAmigos: React.FC = () => {
   const [friends, setFriends] = useState<User[]>([]);
 
 
+  // useEffect(() => {
+  //   async function fetchFriends() {
+  //     try {
+  //       const response = await axios.get('http://localhost:5000/api/friends');
+  //       setFriends(response.data);
+  //     } catch (error) {
+  //       console.error('Erro ao buscar amigos:', error);
+  //     }
+  //   }
+
+  //   fetchFriends();
+  // }, []);
+  
+
   useEffect(() => {
     async function fetchFriends() {
       try {
-        const response = await axios.get('http://localhost:5000/api/friends');
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:5000/api/friends', {
+          headers: {
+            Authorization: `Bearer ${token}` // Inclui o token no cabeçalho
+          }
+        });
         setFriends(response.data);
       } catch (error) {
         console.error('Erro ao buscar amigos:', error);
       }
     }
-
+  
     fetchFriends();
   }, []);
-
   
 
 

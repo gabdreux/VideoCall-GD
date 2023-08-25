@@ -2,25 +2,17 @@
   "users": [
     {
       "id": 1,
-      "name": "gabriel",
+      "name": "gab",
       "email": "user1@gmail.com",
-      "senha": "123456",
-      "friends": [2,3]
+      "senha": "$2b$10$Nevdk7BQIQaRKSm.3ZA/i.2V/0zJlmMWLk4a/oS/bKB3xaEXcD2lO",
+      "friends": []
     },
     {
       "id": 2,
-      "name": "joao",
+      "name": "gab",
       "email": "user2@gmail.com",
-      "senha": "123456",
-      "friends": [1]
-    },
-    {
-      "id": 3,
-      "name": "guilherme",
-      "email": "user3@gmail.com",
-      "senha": "123456",
-      "friends": [1]
+      "senha": "$2b$10$39LZxxPSXbTcUux0nMEiNuQin02skC/YEyuVvBAZ/d0aa4HC5eJxi",
+      "friends": []
     }
-
   ]
 }

@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 
 
+
 const Login: React.FC = () => {
 
   const [email, setEmail] = useState('');
@@ -13,13 +14,18 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted"); 
+
     try {
+      
+      console.log('Sending login request:', email, senha);
       const response = await axios.post('http://localhost:5000/api/login', { email, senha });
       if (response.status === 200) {
+        const token = response.data.token; // Acessando o token da resposta
+        console.log('Token received:', token);
+        // document.cookie = `token=${token}; max-age=3600; path=/`;
         // Login bem-sucedido, redirecione para outra página ou realize outras ações
-        console.log('Login bem-sucedido');
-        
-        // localStorage.setItem('userId', response.data.userId);
+        console.log('Login bem-sucedido', response.data);
+        // console.log('Response:', response.data);
 
         window.location.href = '/user-area';
 

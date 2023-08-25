@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
-
+import { useAuth } from '@/authContext';
 
 
 
 
 const Header: React.FC = () => {
 
+  const { isLoggedIn, logout } = useAuth(); 
 
+
+  
   useEffect(() => {
     if (window.location.pathname === '/videocall') {
       console.log('videocall page');
@@ -28,8 +31,16 @@ const Header: React.FC = () => {
 
 
   const handleRegistrarClick = () => {
-    window.location.href = '/user-area';
+    window.location.href = '/register';
   };
+
+
+  const handleLogoutClick = () => {
+    logout(); // Chama a função de logout do contexto
+  };
+
+
+
 
 
   return (
@@ -55,10 +66,17 @@ const Header: React.FC = () => {
       </ul>
 
 
-      <div className="col-md-3 text-end">
-        <button type="button" className="btn btn-outline-primary me-2" onClick={handleLoginClick}>Login</button>
-        <button type="button" className="btn btn-primary" onClick={handleRegistrarClick}>Registrar</button>
-      </div>
+
+      {isLoggedIn ? (
+          <button type="button" className="btn btn-primary" onClick={handleLogoutClick}>Logout</button>
+        ) : (
+          <div className="col-md-3 text-end">
+            <button type="button" className="btn btn-outline-primary me-2" onClick={handleLoginClick}>Login</button>
+            <button type="button" className="btn btn-primary" onClick={handleRegistrarClick}>Registrar</button>
+          </div>  
+      )}
+
+
 
     </header>
 
