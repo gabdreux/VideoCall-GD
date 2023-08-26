@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-
+import { useAuth } from '@/authContext';
 
 
 const Login: React.FC = () => {
@@ -8,8 +8,9 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  
 
-
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,10 +23,10 @@ const Login: React.FC = () => {
       if (response.status === 200) {
         const token = response.data.token; // Acessando o token da resposta
         console.log('Token received:', token);
+        localStorage.setItem('token', token);
+        login();
         // document.cookie = `token=${token}; max-age=3600; path=/`;
-        // Login bem-sucedido, redirecione para outra página ou realize outras ações
         console.log('Login bem-sucedido', response.data);
-        // console.log('Response:', response.data);
 
         window.location.href = '/user-area';
 
@@ -91,3 +92,7 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
+
+
+

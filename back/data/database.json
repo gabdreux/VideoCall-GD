@@ -5,14 +5,14 @@
       "name": "gab",
       "email": "user1@gmail.com",
       "senha": "$2b$10$Nevdk7BQIQaRKSm.3ZA/i.2V/0zJlmMWLk4a/oS/bKB3xaEXcD2lO",
-      "friends": []
+      "friends": [2]
     },
     {
       "id": 2,
-      "name": "gab",
+      "name": "joao",
       "email": "user2@gmail.com",
       "senha": "$2b$10$39LZxxPSXbTcUux0nMEiNuQin02skC/YEyuVvBAZ/d0aa4HC5eJxi",
-      "friends": []
+      "friends": [1]
     }
   ]
 }

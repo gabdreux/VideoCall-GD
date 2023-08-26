@@ -9,6 +9,12 @@ const server = require('http').Server(app);
 // Importa a função para gerar UUIDs únicos
 const { v4: uuidV4 } = require('uuid');
 
+
+const cookieParser = require('cookie-parser');
+app.use(cookieParser())
+
+
+
 // Configura o socket.io para comunicação em tempo real
 const io = require("socket.io")(server, {
 	cors: {
@@ -24,12 +30,14 @@ const bcrypt = require('bcrypt');
 const config = require('./config');
 
 
+const corsOptions = {
+	origin: 'http://localhost:3000', // Troque pelo endereço real do seu front-end
+	methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+	credentials: true, // Permite que cookies sejam enviados na solicitação (importante para autenticação)
+  };
 
-const cookieParser = require('cookie-parser');
-app.use(cookieParser())
 
-
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
@@ -279,7 +287,7 @@ app.post('/api/login', async (req, res) => {
 	  });
 
 	console.log('Token configurado:', token);
-	res.status(200).json({ message: 'Login bem-sucedido', userId: user.id, token: token });
+	res.status(200).json({ message: 'Login bem-sucedido!', userId: user.id, token: token });
   });
   
 
@@ -307,66 +315,69 @@ app.post('/api/logout', (req, res) => {
   });
 
 
-
-
-
-
-
-
-
-
-
-  //Rota para pegar lista de amigos
-  app.get('/api/friends', (req, res) => {
-	const userId = 1; // Supondo que você tenha o ID do usuário atual após o login
-	const users = getUsers();
   
-	const currentUser = users.find(user => user.id === userId);
-	if (!currentUser) {
-	  return res.status(404).json({ message: 'Usuário não encontrado' });
+
+
+
+
+
+
+
+//   Rota para pegar lista de amigos
+//   app.get('/api/friends', (req, res) => {
+// 	const userId = 1; // Supondo que você tenha o ID do usuário atual após o login
+// 	const users = getUsers();
+  
+// 	const currentUser = users.find(user => user.id === userId);
+// 	if (!currentUser) {
+// 	  return res.status(404).json({ message: 'Usuário não encontrado' });
+// 	}
+  
+// 	const friends = currentUser.friends.map(friendId => {
+// 	  return users.find(user => user.id === friendId);
+// 	});
+  
+// 	res.json(friends);
+
+//   });
+
+
+
+
+app.get('/api/friends', (req, res) => {
+	const token = req.cookies.token; // Pegue o token dos cookies
+
+	console.log("TOKEN ROTA FRIENDS:", token);
+  
+	if (!token) {
+	  return res.status(401).json({ message: 'Token não fornecido' });
 	}
   
-	const friends = currentUser.friends.map(friendId => {
-	  return users.find(user => user.id === friendId);
-	});
+	try {
+	  // Verificar e decodificar o token
+	  const decodedToken = jwt.verify(token, config.jwtSecret);
   
-	res.json(friends);
-
+	  // O ID do usuário logado estará em decodedToken.userId
+	  const userId = decodedToken.userId; // Use o userId do token
+  
+	  const users = getUsers();
+	  const currentUser = users.find(user => user.id === userId);
+  
+	  if (!currentUser) {
+		return res.status(404).json({ message: 'Usuário não encontrado' });
+	  }
+  
+	  const friends = currentUser.friends.map(friendId => {
+		return users.find(user => user.id === friendId);
+	  });
+  
+	  res.json(friends);
+	} catch (error) {
+	  return res.status(401).json({ message: 'Token inválido' });
+	}
   });
+  
 
-
-
-
-
-// app.get('/api/friends', (req, res) => {
-// 	const token = req.headers.authorization;
-  
-// 	if (!token) {
-// 	  return res.status(401).json({ message: 'Token ausente' });
-// 	}
-  
-// 	try {
-// 	  const decoded = jwt.verify(token, 'seuSegredoDoToken');
-// 	  const userId = decoded.id;
-  
-// 	  const users = getUsers();
-// 	  const currentUser = users.find(user => user.id === userId);
-  
-// 	  if (!currentUser) {
-// 		return res.status(404).json({ message: 'Usuário não encontrado' });
-// 	  }
-  
-// 	  const friends = currentUser.friends.map(friendId => {
-// 		return users.find(user => user.id === friendId);
-// 	  });
-  
-// 	  res.json(friends);
-// 	} catch (error) {
-// 	  res.status(401).json({ message: 'Token inválido' });
-// 	}
-	
-//   });
-  
 
 
 

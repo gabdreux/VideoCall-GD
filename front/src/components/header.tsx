@@ -1,27 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { useAuth } from '@/authContext';
-
 
 
 
 const Header: React.FC = () => {
 
-  const { isLoggedIn, logout } = useAuth(); 
-
-
+  const { logout } = useAuth();
+  const [cookies ] = useCookies(['isLoggedIn']);
   
+
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); 
+
+  useEffect(() => {
+    setIsLoggedIn(cookies['isLoggedIn']); // Update isLoggedIn whenever the cookie changes
+  }, [cookies]);
+
+
+
+
   useEffect(() => {
     if (window.location.pathname === '/videocall') {
       console.log('videocall page');
       const header = document.getElementById('header');
+      
   
       if (header) {
         header.classList.add('hidden');
         console.log("classe adicioanda!");
       }
     }
-  }, []);
 
+
+  }, []);
 
 
 
@@ -36,7 +47,8 @@ const Header: React.FC = () => {
 
 
   const handleLogoutClick = () => {
-    logout(); // Chama a função de logout do contexto
+    logout();
+    
   };
 
 
@@ -83,6 +95,7 @@ const Header: React.FC = () => {
 
   );
 };
+
 
 export default Header;
 

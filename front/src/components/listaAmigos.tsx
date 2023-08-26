@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { SocketContext } from '@/socketContext';
 import axios from "axios";
 
+import axiosInstance from '../axios-instance';
+
 
 
 
@@ -22,38 +24,46 @@ const ListaAmigos: React.FC = () => {
   const [friends, setFriends] = useState<User[]>([]);
 
 
-  // useEffect(() => {
-  //   async function fetchFriends() {
-  //     try {
-  //       const response = await axios.get('http://localhost:5000/api/friends');
-  //       setFriends(response.data);
-  //     } catch (error) {
-  //       console.error('Erro ao buscar amigos:', error);
-  //     }
-  //   }
-
-  //   fetchFriends();
-  // }, []);
-  
-
   useEffect(() => {
     async function fetchFriends() {
+      
       try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5000/api/friends', {
-          headers: {
-            Authorization: `Bearer ${token}` // Inclui o token no cabeçalho
-          }
+        const response = await axiosInstance.get('http://localhost:5000/api/friends', {
+          withCredentials: true
         });
         setFriends(response.data);
+
       } catch (error) {
         console.error('Erro ao buscar amigos:', error);
       }
+
     }
   
     fetchFriends();
   }, []);
   
+
+  // async function fetchData() {
+  //   const url = 'http://localhost:5000/api/friends';
+  //   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5MzA2NTQ0MiwiZXhwIjoxNjkzMDY5MDQyfQ.mHROTbiTFjrSkB32F7HLGqGgtCwIvSKuRYy0dxOh4Ao'; 
+  
+  //   const config = {
+  //     headers: {
+  //       'Authorization': `Bearer ${token}`
+  //     },
+  //     withCredentials: true // Incluindo a opção withCredentials
+  //   };
+  
+  //   try {
+  //     const response = await axios.get(url, config);
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+  
+  // fetchData();
+
 
 
 
@@ -85,9 +95,9 @@ const ListaAmigos: React.FC = () => {
     initializeSockets();
 
     
-    if (context) {
-      console.log('Valor de me:', context.me);
-    }
+    // if (context) {
+    //   console.log('Valor de me:', context.me);
+    // }
     console.log('Valor de me2:', context.me);
     // window.location.href = '/videocall';
   }
