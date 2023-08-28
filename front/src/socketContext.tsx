@@ -67,7 +67,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
 
 
-    
+
 
     const initializeSockets = () => {
 
@@ -93,6 +93,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
 
     });
+
 
 
     return () => {
@@ -157,9 +158,11 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       }
     });
 
+
     peer.signal(call.signal);
 
     connectionRef.current = peer;
+
 
   };
 
@@ -169,6 +172,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const callUser = (id: string) => {
 
+    askPermission();
 
     // inicilizeSockets();
 
@@ -197,16 +201,24 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     });
 
+
     socket.on('callAccepted', (signal: any) => {
-      console.log("Inside callAccepted socket event:", callAccepted);
       setCallAccepted(true);
-      console.log("After setting callAccepted:", callAccepted);
       peer.signal(signal);
 
     });
 
+
+    // socket.on('callEnded', (signal: any) => {
+    //   setCallEnded(true);
+    //   peer.signal(signal);
+
+    // });
+
+
     connectionRef.current = peer;
     console.log("userVideo:", userVideo);
+
 
   };
 
@@ -217,11 +229,25 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
 
   const leaveCall = () => {
+
+    if (!connectionRef.current) {
+      return;
+    }
+
+    if (socket) {
+      socket.emit("leaveCall", { to: call.from, signal: connectionRef.current.signal }); // Enviar sinal de encerramento
+    }
+
+
     setCallEnded(true);
 
-    if (connectionRef.current) {
-      connectionRef.current.destroy();
-    }
+    // if (connectionRef.current) {
+    //   connectionRef.current.destroy();
+
+    // }
+
+
+    console.log("leaveCall called CHAMADA!");
 
     // window.location.reload();
   };

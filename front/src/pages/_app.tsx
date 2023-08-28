@@ -6,7 +6,7 @@ import Header from '../components/header';
 import Footer from '../components/footer';
 
 import { AuthProvider } from '../authContext';
-
+import { ContextProvider } from '@/socketContext';
 
 
 
@@ -18,6 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
 
     <AuthProvider>
+    <ContextProvider>
     <div>
 
         <Header />
@@ -25,7 +26,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         {/* <Footer /> */}
 
     </div>
+    </ContextProvider>  
     </AuthProvider>
+    
         
   );
 }

@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useAuth } from '@/authContext';
+import axios from 'axios';
 
 
 
 const Header: React.FC = () => {
 
-  const { logout } = useAuth();
+  
   const [cookies ] = useCookies(['isLoggedIn']);
   
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); 
+  
 
   useEffect(() => {
     setIsLoggedIn(cookies['isLoggedIn']); // Update isLoggedIn whenever the cookie changes
@@ -21,13 +23,13 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     if (window.location.pathname === '/videocall') {
-      console.log('videocall page');
+      // console.log('videocall page');
       const header = document.getElementById('header');
       
   
       if (header) {
         header.classList.add('hidden');
-        console.log("classe adicioanda!");
+        // console.log("classe adicioanda!");
       }
     }
 
@@ -46,8 +48,16 @@ const Header: React.FC = () => {
   };
 
 
-  const handleLogoutClick = () => {
-    logout();
+  const handleLogoutClick = async () => {
+    localStorage.removeItem('token');
+
+    try {
+      // Chamar a rota de logout no servidor
+      await axios.post('http://localhost:5000/api/logout');
+      window.location.href = '/login';
+    } catch (error) {
+      console.error('Erro ao efetuar logout:', error);
+    }
     
   };
 
@@ -85,6 +95,7 @@ const Header: React.FC = () => {
           <div className="col-md-3 text-end">
             <button type="button" className="btn btn-outline-primary me-2" onClick={handleLoginClick}>Login</button>
             <button type="button" className="btn btn-primary" onClick={handleRegistrarClick}>Registrar</button>
+            <button type="button" className="btn btn-primary" onClick={handleLogoutClick}>Logout</button>
           </div>  
       )}
 

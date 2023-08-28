@@ -2,7 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import { SocketContext } from '@/socketContext';
 import axios from "axios";
 
+import { AuthProvider } from "@/authContext";
+
+import { AuthContext } from "@/authContext";
+
 import axiosInstance from '../axios-instance';
+
 
 
 
@@ -20,53 +25,56 @@ type User = {
 
 const ListaAmigos: React.FC = () => {
 
+  const authContext = useContext(AuthContext);
 
   const [friends, setFriends] = useState<User[]>([]);
 
 
+  // useEffect(() => {
+  //   async function fetchFriends() {
+      
+  //     try {
+  //       const response = await axiosInstance.get('http://localhost:5000/api/friends', {
+  //         withCredentials: true
+  //       });
+  //       setFriends(response.data);
+
+  //     } catch (error) {
+  //       console.error('Erro ao buscar amigos:', error);
+  //     }
+
+  //   }
+  
+  //   fetchFriends();
+  // }, []);
+
+
   useEffect(() => {
     async function fetchFriends() {
-      
-      try {
-        const response = await axiosInstance.get('http://localhost:5000/api/friends', {
-          withCredentials: true
-        });
-        setFriends(response.data);
+      if (authContext?.authenticated) { // Verifique se o usuário está autenticado
+        const token = localStorage.getItem('token');
+        const headers = {
+          Authorization: `${token}`
+        };
 
-      } catch (error) {
-        console.error('Erro ao buscar amigos:', error);
+        try {
+          const response = await axios.get<User[]>('http://localhost:5000/api/friends', {
+            withCredentials: true,
+            headers: headers
+          });
+          setFriends(response.data);
+        } catch (error) {
+          console.error('Erro ao buscar amigos:', error);
+        }
       }
-
     }
   
     fetchFriends();
-  }, []);
+  }, [authContext]);
   
 
-  // async function fetchData() {
-  //   const url = 'http://localhost:5000/api/friends';
-  //   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5MzA2NTQ0MiwiZXhwIjoxNjkzMDY5MDQyfQ.mHROTbiTFjrSkB32F7HLGqGgtCwIvSKuRYy0dxOh4Ao'; 
+
   
-  //   const config = {
-  //     headers: {
-  //       'Authorization': `Bearer ${token}`
-  //     },
-  //     withCredentials: true // Incluindo a opção withCredentials
-  //   };
-  
-  //   try {
-  //     const response = await axios.get(url, config);
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
-  
-  // fetchData();
-
-
-
-
 
   const context = useContext(SocketContext);
 
@@ -77,7 +85,6 @@ const ListaAmigos: React.FC = () => {
   const { me, setMe, name, setName, callUser, initializeSockets } = context;
   const [idToCall, setIdToCall] = useState('');
 
-  // const context = useSocketContext();
 
   
   const callHandler = () => {

@@ -1,80 +1,87 @@
-// AuthContext.tsx
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
-
-interface AuthContextData {
-  login: () => void;
-  logout: () => void;
+interface AuthContextProps {
+  authenticated: boolean | null;
 }
 
-
-interface AuthProviderProps {
-    children: ReactNode;
-}
-
-
-
-const AuthContext = createContext<AuthContextData | undefined>(undefined);
+export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 
 
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [cookies, setCookie, removeCookie] = useCookies(['isLoggedIn']);
+export function AuthProvider({ children }: { children: ReactNode }) {
 
+  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
+  // useEffect(() => {
 
-  const login = () => {
-    setCookie('isLoggedIn', 'true', { maxAge: 3600 });
-  };
+  //   const token = localStorage.getItem('token');
 
-
-
-
-  const logout = async () => {
-
-    try {
-        // Chamar a rota de logout no servidor
-        await axios.post('http://localhost:5000/api/logout');
-        removeCookie('isLoggedIn'); 
-        window.location.href = '/login';
-      } catch (error) {
-        console.error('Erro ao efetuar logout:', error);
-      }
+  //   // console.log("TOKEN NO CONTEXT AUTH", token);
 
     
-  };
+  //   if (authenticated === null) {
+
+  //     const headers = {
+  //       Authorization: `Bearer ${token}`
+  //     };
+
+  //     axios.get<{ authenticated: boolean }>('http://localhost:5000/api/check-auth', {
+  //       withCredentials: true,
+  //       headers: headers
+  //     })
+  //       .then(response => {
+  //         setAuthenticated(response.data.authenticated);
+  //       })
+  //       .catch(() => {
+  //         setAuthenticated(false);
+  //       });
+  //   }
+  // }, [authenticated]);
 
 
+  if (typeof window !== 'undefined') { // Verifica se está no contexto de navegador
+    const token = localStorage.getItem('token');
 
+    if (authenticated === null) {
+      const headers = {
+        Authorization: `${token}`
+      };
 
-
-  const authContextValue: AuthContextData = {
-    login,
-    logout,
-  };
-
+      axios.get<{ authenticated: boolean }>('http://localhost:5000/api/check-auth', {
+        withCredentials: true,
+        headers: headers
+      })
+      .then(response => {
+        setAuthenticated(response.data.authenticated);
+      })
+      .catch(() => {
+        setAuthenticated(false);
+      });
+    }
+  }
 
 
 
   return (
-    <AuthContext.Provider value={authContextValue}>
+    <AuthContext.Provider value={{ authenticated }}>
       {children}
     </AuthContext.Provider>
   );
 
 
-};
+
+}
 
 
 
 
-export const useAuth = () => {
+
+export function useAuth() {
   const context = useContext(AuthContext);
-  if (!context) {
+  if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-};
+}

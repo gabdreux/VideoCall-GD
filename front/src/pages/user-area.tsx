@@ -24,7 +24,7 @@ const UserAera: React.FC = () => {
   return (
 
     
-    <ContextProvider>
+    // <ContextProvider>
 
     <div>
     <div className="container text-center">
@@ -104,7 +104,7 @@ const UserAera: React.FC = () => {
 
   </div>
     
-</ContextProvider>
+// </ContextProvider>
 
 
     

@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 // Cria uma instância do aplicativo Express
 const app = express();
+// const app = express.Router();
 // Cria um servidor HTTP usando o aplicativo Express
 const server = require('http').Server(app);
 // Importa a função para gerar UUIDs únicos
@@ -27,6 +28,7 @@ const io = require("socket.io")(server, {
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+
 const config = require('./config');
 
 
@@ -36,6 +38,14 @@ const corsOptions = {
 	credentials: true, // Permite que cookies sejam enviados na solicitação (importante para autenticação)
   };
 
+
+  app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+
+  });
+  
 
 app.use(cors(corsOptions));
 
@@ -102,6 +112,7 @@ const PORT = process.env.PORT || 5000;
 app.get('/', (req, res) => {
 	res.send('Running');
 	console.log('Running');
+
 });
 
 
@@ -149,6 +160,7 @@ io.on("connection", (socket) => {
 
 	socket.emit("me", socket.id, console.log('Novo cliente conectado:', socket.id));
 
+
 	socket.on("me", () => {
 		console.log('Novo cliente conectado:', socket.id);
 	});
@@ -158,15 +170,27 @@ io.on("connection", (socket) => {
 		socket.broadcast.emit("callEnded")
 	});
 
+
 	socket.on("callUser", ({ userToCall, signalData, from, name }) => {
 		io.to(userToCall).emit("callUser", { signal: signalData, from, name });
 	});
+
 
 	socket.on("answerCall", (data) => {
 		io.to(data.to).emit("callAccepted", data.signal)
 	});
 
 
+	socket.on("leaveCall", (data) => {
+		io.to(data.to).emit("callEnded", data.signal)
+	});
+
+
+	socket.on("leaveCall", (data) => {
+		socket.broadcast.to(data.to).emit("callEnded!", data.signal);
+	  });
+
+	
 
 });
 
@@ -239,20 +263,36 @@ app.post("/register", async (req, res) => {
 
   // Middleware de verificação do token
 function verifyToken(req, res, next) {
-	const token = req.header('Authorization');
+
+	const token = req.headers.authorization;
+
+
+	console.log('Token recebido NO VERIFYTOKEN:', token);
   
 	if (!token) {
 	  return res.status(401).json({ message: 'Token não fornecido' });
 	}
   
+
 	try {
 	  const decoded = jwt.verify(token, config.jwtSecret);
 	  req.userId = decoded.userId;
+	  console.log('Token válido!!!!:', decoded.userId);
 	  next();
 	} catch (err) {
 	  return res.status(403).json({ message: 'Token inválido' });
 	}
+
+
   }
+
+
+
+
+app.get('/api/check-auth', verifyToken, (req, res) => {
+	res.json({ authenticated: true });
+	
+}); 
 
 
 
@@ -286,8 +326,12 @@ app.post('/api/login', async (req, res) => {
 		maxAge: 3600000,
 	  });
 
+
+	res.header("Authorization", `Bearer ${token}`);
+
 	console.log('Token configurado:', token);
 	res.status(200).json({ message: 'Login bem-sucedido!', userId: user.id, token: token });
+	
   });
   
 
@@ -344,37 +388,22 @@ app.post('/api/logout', (req, res) => {
 
 
 
-app.get('/api/friends', (req, res) => {
-	const token = req.cookies.token; // Pegue o token dos cookies
+app.get('/api/friends', verifyToken, (req, res) => {
+	const userId = req.userId; // Obtém o userId do req após a verificação do token
+  
+	const users = getUsers();
+	const currentUser = users.find(user => user.id === userId);
+  
+	if (!currentUser) {
+	  return res.status(404).json({ message: 'Usuário não encontrado' });
+	}
+  
+	const friends = currentUser.friends.map(friendId => {
+	  return users.find(user => user.id === friendId);
+	});
+  
+	res.json(friends);
 
-	console.log("TOKEN ROTA FRIENDS:", token);
-  
-	if (!token) {
-	  return res.status(401).json({ message: 'Token não fornecido' });
-	}
-  
-	try {
-	  // Verificar e decodificar o token
-	  const decodedToken = jwt.verify(token, config.jwtSecret);
-  
-	  // O ID do usuário logado estará em decodedToken.userId
-	  const userId = decodedToken.userId; // Use o userId do token
-  
-	  const users = getUsers();
-	  const currentUser = users.find(user => user.id === userId);
-  
-	  if (!currentUser) {
-		return res.status(404).json({ message: 'Usuário não encontrado' });
-	  }
-  
-	  const friends = currentUser.friends.map(friendId => {
-		return users.find(user => user.id === friendId);
-	  });
-  
-	  res.json(friends);
-	} catch (error) {
-	  return res.status(401).json({ message: 'Token inválido' });
-	}
   });
   
 

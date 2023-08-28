@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import { useAuth } from '@/authContext';
 
 
 const Login: React.FC = () => {
@@ -10,7 +9,6 @@ const Login: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
   
 
-  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,16 +19,16 @@ const Login: React.FC = () => {
       console.log('Sending login request:', email, senha);
       const response = await axios.post('http://localhost:5000/api/login', { email, senha });
       if (response.status === 200) {
-        const token = response.data.token; // Acessando o token da resposta
-        console.log('Token received:', token);
+        const token = response.data.token;
+        // console.log('Token received:', token);
         localStorage.setItem('token', token);
-        login();
         // document.cookie = `token=${token}; max-age=3600; path=/`;
         console.log('Login bem-sucedido', response.data);
 
         window.location.href = '/user-area';
 
       }
+
     } catch (error: any) {
       if (error.response) {
         setErrorMessage(error.response.data.message);
@@ -38,6 +36,7 @@ const Login: React.FC = () => {
         setErrorMessage('Erro ao realizar o login');
       }
     }
+    
   };
 
 
