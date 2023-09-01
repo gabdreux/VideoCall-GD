@@ -5,14 +5,30 @@
       "name": "gab",
       "email": "user1@gmail.com",
       "senha": "$2b$10$Nevdk7BQIQaRKSm.3ZA/i.2V/0zJlmMWLk4a/oS/bKB3xaEXcD2lO",
-      "friends": [2]
+      "friends": [
+        2
+      ],
+      "me": "CVAiRX4t-DqMeQicAAAT"
     },
     {
       "id": 2,
       "name": "joao",
       "email": "user2@gmail.com",
       "senha": "$2b$10$39LZxxPSXbTcUux0nMEiNuQin02skC/YEyuVvBAZ/d0aa4HC5eJxi",
-      "friends": [1]
+      "friends": [
+        1
+      ],
+      "me": ""
+    },
+    {
+      "id": 3,
+      "name": "user3",
+      "email": "user3@gmail.com",
+      "senha": "$2b$10$b9BIJNxLgzNrvVF/tj3tWO1FdQ5OqbpK2656gO3bovOCVN6TUwCmK",
+      "friends": [
+        1,
+        2
+      ]
     }
   ]
 }

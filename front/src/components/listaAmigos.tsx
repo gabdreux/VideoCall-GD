@@ -65,7 +65,7 @@ const ListaAmigos: React.FC = () => {
     return null;
   }
 
-  const { me, setMe, name, setName, callUser, initializeSockets } = context;
+  const { me, setMe, name, setName, callUser, pushMe } = context;
   const [idToCall, setIdToCall] = useState('');
 
 
@@ -89,6 +89,9 @@ const ListaAmigos: React.FC = () => {
   }
 
   
+  const test = () => {
+    pushMe(me);
+  }
 
 
   return (
@@ -104,7 +107,7 @@ const ListaAmigos: React.FC = () => {
           <h4>Amigos:</h4>
         </a>
 
-    
+        <button onClick={test}>teste</button>
 
         <div className="container text-center">
           {friends.map((friend) => (

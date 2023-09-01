@@ -11,6 +11,13 @@ const server = require('http').Server(app);
 const { v4: uuidV4 } = require('uuid');
 
 
+
+app.get('/', (req, res) => {
+	res.send('Running');
+  });
+
+
+
 const cookieParser = require('cookie-parser');
 app.use(cookieParser())
 
@@ -62,7 +69,7 @@ app.use(express.static('public'));
 const fs = require('fs');
 const path = require('path');
 
-const dataFilePath = path.join(__dirname, 'data', 'database.json');
+const dataFilePath = path.join(__dirname, '..', 'data', 'database.json');
 
 
 
@@ -70,6 +77,7 @@ const dataFilePath = path.join(__dirname, 'data', 'database.json');
 
 
 const PORT = process.env.PORT || 5000;
+
 
 
 
@@ -106,14 +114,6 @@ const PORT = process.env.PORT || 5000;
 // });
 
 
-
-
-
-app.get('/', (req, res) => {
-	res.send('Running');
-	console.log('Running');
-
-});
 
 
 
@@ -263,6 +263,32 @@ app.post("/register", async (req, res) => {
 
 
 
+  app.post("/saveme", extractUserId, (req, res) => {
+	const { me } = req.body;
+	const userId = req.userId;
+
+	  console.log("Corpo da solicitação:", req.body);
+  	  console.log("Valor de 'me':", me);
+  
+	const users = getUsers();
+	const currentUser = users.find(user => user.id === userId);
+  
+	if (!currentUser) {
+	  return res.status(404).json({ message: 'Usuário não encontrado' });
+	}
+
+	currentUser.me = me;
+
+	saveUsers(users);
+
+	res.status(200).json({ message: 'String "me" salva com sucesso' });
+
+
+  })
+
+
+
+
   // Middleware de verificação do token
 function verifyToken(req, res, next) {
 
@@ -298,7 +324,6 @@ app.get('/api/check-auth', verifyToken, (req, res) => {
 
 
 
-  
 
 
 //Rota de login
@@ -340,10 +365,6 @@ app.post('/api/login', async (req, res) => {
 
 
 
-
-
-
-
 // Rota de logout
 app.post('/api/logout', (req, res) => {
 
@@ -362,9 +383,6 @@ app.post('/api/logout', (req, res) => {
 
 
   
-
-
-
 
 function extractUserId(req, res, next) {
 	const token = req.headers.authorization;
@@ -386,7 +404,7 @@ function extractUserId(req, res, next) {
   
 
 app.get('/api/friends', extractUserId, (req, res) => {
-	const userId = req.userId; // Obtém o userId do req após a verificação do token
+	const userId = req.userId;
   
 	const users = getUsers();
 	const currentUser = users.find(user => user.id === userId);

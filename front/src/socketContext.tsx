@@ -1,6 +1,8 @@
-import React, { createContext, useState, useRef, useEffect, ReactNode } from 'react';
+import React, { createContext, useState, useRef, useEffect, ReactNode, useContext } from 'react';
 import { io, Socket } from 'socket.io-client';
 import Peer from 'simple-peer';
+import axios from 'axios';
+import { AuthContext } from "@/authContext";
 
 
 
@@ -26,7 +28,7 @@ export interface ContextProps {
   leaveCall: () => void;
   answerCall: () => void;
   idTocall: string;
-  initializeSockets: () => void
+  pushMe: (me: string) => void
 
 }
 
@@ -66,6 +68,9 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
 
+  const authContext = useContext(AuthContext);
+
+
 
 
     useEffect(() => {
@@ -78,6 +83,13 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         newSocket.on('me', () => {
           console.log('Connected to server:', newSocket.id);
           setMe(newSocket.id);
+
+
+          pushMe(newSocket.id);
+
+
+
+
   
         });
   
@@ -107,39 +119,44 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
 
 
-    const initializeSockets = () => {
+    const pushMe = (me:string) => {
 
 
-      const newSocket = io('http://localhost:5000/');
+        async function saveMe() {
+          
 
-      setSocket(newSocket);
+                const token = localStorage.getItem('token');
+                const headers = {
+                  Authorization: `${token}`,
+                };
+
+                const data = {
+                  me: me,
+                };
+            
+                try {
+                  const response = await axios.post('http://localhost:5000/saveme', data, {
+                    withCredentials: true,
+                    headers: headers,
+                  });
+
+                  if (response.status === 200) {
+                    console.log(response.data.message); // Exibe a mensagem de sucesso do servidor
+                  } else {
+                    console.error('Erro ao salvar a string "me":', response.statusText);
+                  }
+
+
+                } catch (error) {
+                  console.error('Erro ao salvar a string "me":', error);
+                }
+
+          
+        }
+
         
-
-      newSocket.on('me', () => {
-        console.log('Connected to server:', newSocket.id);
-        setMe(newSocket.id);
-
-      });
-
-
-
-      newSocket.on('disconnect', () => {
-        console.log('Disconnected from server');
-      });
-
-
-      
-      newSocket.on('callUser', ({ from, name: callerName, signal }: Call) => {
-        setCall({ isReceivingCall: true, from, name: callerName, signal });
-
-      });
-
-
-
-      return () => {
-        newSocket.disconnect();
-      };
-
+        
+        saveMe();
     
 
   };
@@ -310,7 +327,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     leaveCall,
     answerCall,
     idTocall,
-    initializeSockets,
+    pushMe,
 
   };
 
