@@ -70,7 +70,7 @@ const ListaAmigos: React.FC = () => {
 
 
   
-  const callHandler = () => {
+  const callHandler = (email: string, name: string) => {
 
 
 
@@ -82,8 +82,8 @@ const ListaAmigos: React.FC = () => {
           Authorization: `${token}`,
         };
 
-        const email = "user1@gmail.com";
-        const name = "gabriel";
+        // const email = "user1@gmail.com";
+        // const name = "gabriel";
         
     
         try {
@@ -164,7 +164,7 @@ const ListaAmigos: React.FC = () => {
                   <div className="container text-center card">
                     <div className="row align-items-start">
                       <div className="col">
-                        <i className='fas fa-phone' onClick={callHandler}><use href="#"></use></i>
+                        <i className='fas fa-phone' onClick={() => callHandler(friend.email, friend.name)}><use href="#"></use></i>
                       </div>
                       <div className="col">
                         <i className='fas fa-trash-alt'><use href="#"></use></i>
