@@ -83,13 +83,8 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         newSocket.on('me', () => {
           console.log('Connected to server:', newSocket.id);
           setMe(newSocket.id);
-
-
           pushMe(newSocket.id);
-
-
-
-
+          
   
         });
   

@@ -423,6 +423,26 @@ app.get('/api/friends', extractUserId, (req, res) => {
   
 
 
+  
+
+  app.post('/idtocall', extractUserId, (req, res) => {
+	const userId = req.userId;
+	const { email } = req.body;
+  
+	const users = getUsers();
+	const currentUser = users.find(user => user.id === userId);
+	const userToCall = users.find(user => user.email === email);
+  
+	if (!currentUser) {
+	  return res.status(404).json({ message: 'Usuário não encontrado' });
+	}
+  
+	const idToCall = userToCall.me;
+
+	res.status(200).json(idToCall);
+  
+
+  });
 
 
 

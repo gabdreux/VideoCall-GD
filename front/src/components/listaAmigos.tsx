@@ -28,7 +28,7 @@ const ListaAmigos: React.FC = () => {
 
 
   useEffect(() => {
-    async function fetchFriends() {
+    async function getFriends() {
 
       if (authContext?.authenticated) { // Verifique se o usuário está autenticado
         console.log("AUTENDICADO");
@@ -52,7 +52,7 @@ const ListaAmigos: React.FC = () => {
       }
     }
   
-    fetchFriends();
+    getFriends();
   }, [authContext]);
   
 
@@ -71,16 +71,52 @@ const ListaAmigos: React.FC = () => {
 
   
   const callHandler = () => {
+
+
+
+    async function getIdToCall() {
+          
+
+        const token = localStorage.getItem('token');
+        const headers = {
+          Authorization: `${token}`,
+        };
+
+        const email = "user1@gmail.com";
+        const name = "gabriel";
+        
     
-    const idToCall = context.me;
-    setIdToCall(idToCall);
+        try {
+
+          const response = await axios.post('http://localhost:5000/idtocall', { email }, {
+            withCredentials: true,
+            headers: headers,
+          });
 
 
-    const name = "gabriel";
-    setName(name);
+          if (response.status === 200) {
+            console.log("IDTOCALL NA RESPONSE", response.data);
+            // setIdToCall(response.data);
+            setName(name); 
+            callUser(response.data);
+          } else {
+            console.error('Erro ao salvar a string "me":', response.statusText);
+          }
 
 
-    callUser(idToCall);
+        } catch (error) {
+          console.error('Erro ao salvar a string "me":', error);
+        }
+
+
+
+
+    }
+
+
+
+    getIdToCall();
+
 
 
 
@@ -88,10 +124,12 @@ const ListaAmigos: React.FC = () => {
     
   }
 
+
+
+
+
+
   
-  const test = () => {
-    pushMe(me);
-  }
 
 
   return (
@@ -107,7 +145,7 @@ const ListaAmigos: React.FC = () => {
           <h4>Amigos:</h4>
         </a>
 
-        <button onClick={test}>teste</button>
+
 
         <div className="container text-center">
           {friends.map((friend) => (
