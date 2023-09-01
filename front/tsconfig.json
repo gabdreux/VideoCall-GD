@@ -23,6 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/socketContext.tsx", "src/newContext.js", "src/pages/newContext.jsx", "src/components/videoMenu.tsx", "src/pages/_app.tsx", "src/pages/index.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/socketContext.tsx", "src/newContext.js", "src/pages/newContext.jsx", "src/components/videoMenu.tsx", "src/pages/_app.tsx", "src/pages/index.tsx", "src/socketSlice.js", "src/socketStore.js", "src/components/user-area.tsx"],
   "exclude": ["node_modules"]
 }

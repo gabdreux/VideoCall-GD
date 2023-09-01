@@ -150,25 +150,26 @@ function getUser () {
 
 
 
-// const socketToUser = {};
+
 
 
 io.on("connection", (socket) => {
 
 
-	// socket.emit("me", socket.id);
 
-	socket.emit("me", socket.id, console.log('Novo cliente conectado:', socket.id));
+	socket.emit("me", socket.id, console.log('Cliente conectado:', socket.id));
 
 
 	socket.on("me", () => {
-		console.log('Novo cliente conectado:', socket.id);
+		console.log("ME CHAMADO PELO CLIENTE!");
 	});
 
 
 	socket.on("disconnect", () => {
-		socket.broadcast.emit("callEnded")
+		socket.broadcast.emit("callEnded");
+		console.log('Cliente desconectado:', socket.id);
 	});
+
 
 
 	socket.on("callUser", ({ userToCall, signalData, from, name }) => {
@@ -193,6 +194,7 @@ io.on("connection", (socket) => {
 	
 
 });
+
 
 
 
@@ -364,31 +366,26 @@ app.post('/api/logout', (req, res) => {
 
 
 
-
-
-
-//   Rota para pegar lista de amigos
-//   app.get('/api/friends', (req, res) => {
-// 	const userId = 1; // Supondo que você tenha o ID do usuário atual após o login
-// 	const users = getUsers();
+function extractUserId(req, res, next) {
+	const token = req.headers.authorization;
   
-// 	const currentUser = users.find(user => user.id === userId);
-// 	if (!currentUser) {
-// 	  return res.status(404).json({ message: 'Usuário não encontrado' });
-// 	}
+	if (!token) {
+	  return res.status(401).json({ message: 'Token não fornecido' });
+	}
   
-// 	const friends = currentUser.friends.map(friendId => {
-// 	  return users.find(user => user.id === friendId);
-// 	});
+	try {
+	  const decoded = jwt.verify(token, config.jwtSecret);
+	  req.userId = decoded.userId; // Adiciona o userId ao objeto req
+	  next();
+	} catch (err) {
+	  return res.status(403).json({ message: 'Token inválido' });
+	}
+  }
+
+
   
-// 	res.json(friends);
 
-//   });
-
-
-
-
-app.get('/api/friends', verifyToken, (req, res) => {
+app.get('/api/friends', extractUserId, (req, res) => {
 	const userId = req.userId; // Obtém o userId do req após a verificação do token
   
 	const users = getUsers();

@@ -1,24 +1,21 @@
 import { AppProps } from 'next/app';
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 import '../app/globals.css';
 import '../app/responsive.css';
 import Header from '../components/header';
 import Footer from '../components/footer';
 
 import { AuthProvider } from '../authContext';
-import { ContextProvider } from '@/socketContext';
-
 
 
 
 
 function MyApp({ Component, pageProps }: AppProps) {
 
-
   return (
 
     <AuthProvider>
-    <ContextProvider>
+
     <div>
 
         <Header />
@@ -26,11 +23,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         {/* <Footer /> */}
 
     </div>
-    </ContextProvider>  
+
     </AuthProvider>
     
         
   );
+
+
 }
+
 
 export default MyApp;

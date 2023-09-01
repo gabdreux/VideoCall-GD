@@ -57,7 +57,6 @@ const VideoCanva2: React.FC = () => {
 
         ) }
 
-
            
         {  stream && (
 
@@ -68,6 +67,57 @@ const VideoCanva2: React.FC = () => {
             </div>
 
         ) } 
+
+
+
+
+
+
+        {/* { 2 != 2 && (
+
+        <div>
+          <video playsInline ref={userVideo} autoPlay />
+          <p>{call.name} || '2party name'</p>
+        </div>
+
+        ) }
+
+
+
+
+        { 3 === 3 && (
+
+        <div className=''>
+        <div className='row'> 
+
+          <div className='col-sm-6 col-md-6 col-lg-6'>
+            <video playsInline ref={userVideo} autoPlay />
+            <p>{call.name} || '2party name'</p>
+          </div>  
+
+          <div className='col-sm-6 col-md-6 col-lg-6'>
+            <video playsInline ref={userVideo} autoPlay />
+            <p>{call.name} || '3party name'</p>
+          </div>
+
+        </div>
+        </div> 
+
+        ) }
+
+
+
+
+        {  1 === 1 && (
+
+        <div className="grid meuVideo">
+          <div className="col-2 meuVideo">
+            <video playsInline muted ref={myVideo} autoPlay />
+          </div>
+        </div>
+
+        ) }  */}
+
 
 
 

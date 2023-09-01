@@ -63,7 +63,45 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const idTocall = '';
 
 
-    const [socket, setSocket] = useState<Socket | null>(null);
+  const [socket, setSocket] = useState<Socket | null>(null);
+
+
+
+
+    useEffect(() => {
+
+        const newSocket = io('http://localhost:5000/');
+  
+        setSocket(newSocket);
+          
+  
+        newSocket.on('me', () => {
+          console.log('Connected to server:', newSocket.id);
+          setMe(newSocket.id);
+  
+        });
+  
+  
+  
+        newSocket.on('disconnect', () => {
+          console.log('Disconnected from server');
+        });
+  
+  
+        
+        newSocket.on('callUser', ({ from, name: callerName, signal }: Call) => {
+          setCall({ isReceivingCall: true, from, name: callerName, signal });
+  
+        });
+  
+  
+  
+        return () => {
+          newSocket.disconnect();
+        };
+  
+      
+    }, []);
 
 
 
@@ -71,43 +109,40 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     const initializeSockets = () => {
 
+
       const newSocket = io('http://localhost:5000/');
+
       setSocket(newSocket);
+        
 
-    // const socket2 = io('http://localhost:5000');
+      newSocket.on('me', () => {
+        console.log('Connected to server:', newSocket.id);
+        setMe(newSocket.id);
 
-    newSocket.on('me', () => {
-      console.log('Connected to server');
-      setMe(newSocket.id);
-      console.log(me);
-      console.log(newSocket.id);
-    });
-
-    newSocket.on('disconnect', () => {
-      console.log('Disconnected from server');
-    });
-
-
-    
-    newSocket.on('callUser', ({ from, name: callerName, signal }: Call) => {
-      setCall({ isReceivingCall: true, from, name: callerName, signal });
-
-    });
+      });
 
 
 
-    return () => {
-      newSocket.disconnect();
-    };
+      newSocket.on('disconnect', () => {
+        console.log('Disconnected from server');
+      });
+
+
+      
+      newSocket.on('callUser', ({ from, name: callerName, signal }: Call) => {
+        setCall({ isReceivingCall: true, from, name: callerName, signal });
+
+      });
+
+
+
+      return () => {
+        newSocket.disconnect();
+      };
 
     
 
   };
-
-
-
-
-
 
 
 

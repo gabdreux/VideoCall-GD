@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useState, useContext, ReactNode } from 'react';
+
+
+import { SocketContext } from '@/socketContext';
 
 
 
 const VideoCallMenu: React.FC = () => {
 
+  const context = useContext(SocketContext);
+
+  if (!context) {
+    return null;
+  }
+
+  const { leaveCall } = context;
+
+
   
     const handlePowerOff = () => {
-        window.location.href = '/user-area';
+        leaveCall();
+
       };
+
+      
 
     return (
 

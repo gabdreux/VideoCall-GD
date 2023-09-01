@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { SocketContext } from '@/socketContext';
 import axios from "axios";
-
-import { AuthProvider } from "@/authContext";
-
 import { AuthContext } from "@/authContext";
 
-import axiosInstance from '../axios-instance';
+
 
 
 
@@ -30,28 +27,11 @@ const ListaAmigos: React.FC = () => {
   const [friends, setFriends] = useState<User[]>([]);
 
 
-  // useEffect(() => {
-  //   async function fetchFriends() {
-      
-  //     try {
-  //       const response = await axiosInstance.get('http://localhost:5000/api/friends', {
-  //         withCredentials: true
-  //       });
-  //       setFriends(response.data);
-
-  //     } catch (error) {
-  //       console.error('Erro ao buscar amigos:', error);
-  //     }
-
-  //   }
-  
-  //   fetchFriends();
-  // }, []);
-
-
   useEffect(() => {
     async function fetchFriends() {
+
       if (authContext?.authenticated) { // Verifique se o usuário está autenticado
+        console.log("AUTENDICADO");
         const token = localStorage.getItem('token');
         const headers = {
           Authorization: `${token}`
@@ -66,6 +46,9 @@ const ListaAmigos: React.FC = () => {
         } catch (error) {
           console.error('Erro ao buscar amigos:', error);
         }
+      }
+      else {
+        console.log("SEM AUTENTICAÇÃO");
       }
     }
   
@@ -89,24 +72,20 @@ const ListaAmigos: React.FC = () => {
   
   const callHandler = () => {
     
-    // const idToCall = "1";
-    // setIdToCall(idToCall);
+    const idToCall = context.me;
+    setIdToCall(idToCall);
 
 
-    // const name = "gabriel";
-    // setName(name);
+    const name = "gabriel";
+    setName(name);
 
 
-    // callUser(idToCall);
+    callUser(idToCall);
 
-    initializeSockets();
 
+
+    // console.log('Valor de me2:', context.me);
     
-    // if (context) {
-    //   console.log('Valor de me:', context.me);
-    // }
-    console.log('Valor de me2:', context.me);
-    // window.location.href = '/videocall';
   }
 
   

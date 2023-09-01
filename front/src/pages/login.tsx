@@ -25,7 +25,7 @@ const Login: React.FC = () => {
         // document.cookie = `token=${token}; max-age=3600; path=/`;
         console.log('Login bem-sucedido', response.data);
 
-        window.location.href = '/user-area';
+        window.location.href = '/connect';
 
       }
 
