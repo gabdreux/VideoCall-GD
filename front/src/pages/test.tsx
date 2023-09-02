@@ -65,8 +65,8 @@ const VideoCanva: React.FC = () => {
 
             { 1 === 1 && (
 
-                <div className="grid meuVideo">
-                    <video className='part1-video' playsInline muted  autoPlay />
+                <div className="grid meuvideo-party3-wrapper">
+                    <video className='meuvideo-party3' playsInline muted  autoPlay />
                 </div>
 
             ) } 

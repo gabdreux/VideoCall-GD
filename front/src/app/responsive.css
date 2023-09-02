@@ -73,12 +73,35 @@
 
     }
 
+    
+
+    .video1v2 {
+        height: calc(100vh - 250px);
+      
+    }
 
 
+
+    .meuvideo-party3-wrapper {
+        width: 100%;
+        border-radius: 0px;
+        margin-left: 0px;
+      
+    }
+      
+
+      
+    .meuvideo-party3-wrapper video {
+        border-radius: 0px;
+      
+    }
+      
 
 
 
 }
+
+
 
 
 @media (max-width: 376px) {

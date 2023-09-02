@@ -404,6 +404,30 @@ video.party2-video {
 }
 
 
+.meuvideo-party3-wrapper {
+  background-color: var(--color-text);
+  width: 200px;
+  border: solid 2px var(--color-black);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  margin-left: 20px;
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 150px;
+  left: 0;
+
+}
+
+
+.meuvideo-party3-wrapper video {
+  width: 100%;
+  border-radius: 20px;
+
+}
+
+
 
 div#modalChoice {
   background-color: transparent !important;

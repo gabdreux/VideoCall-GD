@@ -42,28 +42,74 @@ const VideoCanva2: React.FC = () => {
     
     return (
 
+
     <div className="grid text-center videoCanva2" style={{ '--bs-columns': 'col' } as React.CSSProperties }>
-      <div className='video1v1'>
+
+
+          { 2 === 2 && (
+                <div className='video1v1'>
+                  
+
+                      { callAccepted && !callEnded && (
+
+                            <div className='party2-video-wrapper'>
+                            <video className='party2-video' playsInline ref={userVideo} autoPlay />
+                            </div>
+
+                      ) }
+
+                        
+
+                      {  stream && (
+
+                          <div className="grid meuVideo">
+                              <video className='part1-video' playsInline muted ref={myVideo} autoPlay />
+                          </div>
+
+                      ) } 
+
+              </div>            
+
+          )}
 
 
 
 
-        { callAccepted && !callEnded && (
 
-              <div className='party2-video-wrapper'>
-              <video className='party2-video' playsInline ref={userVideo} autoPlay />
-              </div>
+          { 3 === 3 && (
 
-        ) }
+              <div className='video1v2'>
 
-           
-        {  stream && (
+                    { 2 === 2 && (
+                      
+                        <div className='video1v2-wrapper'>
 
-            <div className="grid meuVideo">
-                <video className='part1-video' playsInline muted ref={myVideo} autoPlay />
-            </div>
+                          <div className='party3-video-wrapper col-6'>
+                            <video className='party2-video party3' playsInline  autoPlay />
+                          </div>
 
-        ) } 
+                          <div className='party3-video-wrapper col-6'>
+                            <video className='party2-video party3' playsInline  autoPlay />
+                          </div>
+
+                        </div>
+
+                    ) }
+
+                      
+
+                    { 1 === 1 && (
+
+                        <div className="grid meuvideo-party3-wrapper">
+                            <video className='meuvideo-party3' playsInline muted  autoPlay />
+                        </div>
+
+                    ) } 
+
+              </div>            
+
+
+          )}                
 
 
 
@@ -72,7 +118,6 @@ const VideoCanva2: React.FC = () => {
 
 
 
-      </div>
     </div>    
 
 
