@@ -17,14 +17,14 @@ const VideoCall: React.FC = () => {
 
     <div>
 
-      <div>
+
         <VideoCanva2 />
-      </div>
 
 
-      <div>
+
+
         <VideoCallMenu />
-      </div>
+
 
     </div>
     

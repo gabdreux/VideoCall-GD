@@ -8,7 +8,7 @@
       "friends": [
         2
       ],
-      "me": "mi9XAx0r9GLUvj2UAAAT"
+      "me": "2S2WQYUty10vAafsAAA9"
     },
     {
       "id": 2,
@@ -18,17 +18,7 @@
       "friends": [
         1
       ],
-      "me": "FUO4prLbXQ1dhHXUAAAV"
-    },
-    {
-      "id": 3,
-      "name": "user3",
-      "email": "user3@gmail.com",
-      "senha": "$2b$10$b9BIJNxLgzNrvVF/tj3tWO1FdQ5OqbpK2656gO3bovOCVN6TUwCmK",
-      "friends": [
-        1,
-        2
-      ]
+      "me": "TNwA9Y_sOvEs4PmuAAA_"
     }
   ]
 }

@@ -17,8 +17,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     <AuthProvider>
 
     <div>
-
-        <Header />
+{/* 
+        <Header /> */}
         <Component {...pageProps} />
         {/* <Footer /> */}
 

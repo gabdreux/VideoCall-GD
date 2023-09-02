@@ -188,7 +188,7 @@ io.on("connection", (socket) => {
 
 
 	socket.on("leaveCall", (data) => {
-		socket.broadcast.to(data.to).emit("callEnded!", data.signal);
+		socket.broadcast.to(data.to).emit("callEnded", data.signal);
 	  });
 
 	

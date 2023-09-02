@@ -93,9 +93,9 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         newSocket.on('disconnect', () => {
           console.log('Disconnected from server');
         });
+
+
   
-  
-        
         newSocket.on('callUser', ({ from, name: callerName, signal }: Call) => {
           setCall({ isReceivingCall: true, from, name: callerName, signal });
   
@@ -189,9 +189,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       return;
   };
 
-    console.log("Before setting callAccepted:", callAccepted);
     setCallAccepted(true);
-    console.log("After setting callAccepted:", callAccepted);
 
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
@@ -199,6 +197,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       socket.emit('answerCall', { signal: data, to: call.from });
     });
 
+    
     peer.on('stream', (currentStream) => {
       if (userVideo.current) {
         userVideo.current.srcObject = currentStream; //Other person stream
@@ -212,6 +211,8 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
 
   };
+
+
 
 
 
@@ -238,6 +239,11 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       socket.emit('callUser', { userToCall: id, signalData: data, from: me, name });
     });
 
+
+    peer.on('desligar', (data) => {
+      socket.emit('leaveCall', { userToCall: id, signalData: data, from: me, name });
+    });
+
     console.log("DATA:" , "userToCallID:", id, "ME:", me, "NAME:", name);
 
 
@@ -256,11 +262,10 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     });
 
 
-    // socket.on('callEnded', (signal: any) => {
-    //   setCallEnded(true);
-    //   peer.signal(signal);
+    socket.on('callEnded', (signal: any) => {
+      setCallEnded(true);
 
-    // });
+    });
 
 
     connectionRef.current = peer;
@@ -277,24 +282,46 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const leaveCall = () => {
 
-    if (!connectionRef.current) {
+    const peer = connectionRef.current;
+
+    if (!peer) {
       return;
     }
 
-    if (socket) {
-      socket.emit("leaveCall", { to: call.from, signal: connectionRef.current.signal }); // Enviar sinal de encerramento
+
+    if (!socket) {
+      return;
     }
 
 
-    setCallEnded(true);
+    socket.emit("leaveCall", { to: call.from, signal: peer.signal });
 
-    // if (connectionRef.current) {
-    //   connectionRef.current.destroy();
 
-    // }
+    // socket.disconnect();
 
+
+
+    peer.on('signal', (data) => {
+      socket.emit('leaveCall', { signal: data, to: call.from });
+      // setCallEnded(true);
+    });
+
+
+      // Parar a exibição de vídeo e áudio
+    if (myVideo.current) {
+      myVideo.current.srcObject = null;
+    }
+
+    if (socket && call.from) {
+      socket.emit("leaveCall", { to: call.from });
+    }
+
+    peer.destroy();
 
     console.log("leaveCall called CHAMADA!");
+
+    setCallEnded(true);
+    setStream(undefined);
 
     // window.location.reload();
   };

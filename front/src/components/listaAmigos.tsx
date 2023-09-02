@@ -84,6 +84,7 @@ const ListaAmigos: React.FC = () => {
 
         // const email = "user1@gmail.com";
         // const name = "gabriel";
+        setName(name);
         
     
         try {
@@ -97,7 +98,6 @@ const ListaAmigos: React.FC = () => {
           if (response.status === 200) {
             console.log("IDTOCALL NA RESPONSE", response.data);
             // setIdToCall(response.data);
-            setName(name); 
             callUser(response.data);
           } else {
             console.error('Erro ao salvar a string "me":', response.statusText);

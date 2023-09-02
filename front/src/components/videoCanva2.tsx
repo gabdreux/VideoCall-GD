@@ -43,17 +43,16 @@ const VideoCanva2: React.FC = () => {
     return (
 
     <div className="grid text-center videoCanva2" style={{ '--bs-columns': 'col' } as React.CSSProperties }>
-      <div className='video1'>
+      <div className='video1v1'>
 
 
 
 
         { callAccepted && !callEnded && (
 
-            <div>
-              <video playsInline ref={userVideo} autoPlay />
-              <p>{call.name} || '2party name'</p>
-            </div>
+              <div className='party2-video-wrapper'>
+              <video className='party2-video' playsInline ref={userVideo} autoPlay />
+              </div>
 
         ) }
 
@@ -61,62 +60,13 @@ const VideoCanva2: React.FC = () => {
         {  stream && (
 
             <div className="grid meuVideo">
-              <div className="col-2 meuVideo">
-                <video playsInline muted ref={myVideo} autoPlay />
-              </div>
+                <video className='part1-video' playsInline muted ref={myVideo} autoPlay />
             </div>
 
         ) } 
 
 
 
-
-
-
-        {/* { 2 != 2 && (
-
-        <div>
-          <video playsInline ref={userVideo} autoPlay />
-          <p>{call.name} || '2party name'</p>
-        </div>
-
-        ) }
-
-
-
-
-        { 3 === 3 && (
-
-        <div className=''>
-        <div className='row'> 
-
-          <div className='col-sm-6 col-md-6 col-lg-6'>
-            <video playsInline ref={userVideo} autoPlay />
-            <p>{call.name} || '2party name'</p>
-          </div>  
-
-          <div className='col-sm-6 col-md-6 col-lg-6'>
-            <video playsInline ref={userVideo} autoPlay />
-            <p>{call.name} || '3party name'</p>
-          </div>
-
-        </div>
-        </div> 
-
-        ) }
-
-
-
-
-        {  1 === 1 && (
-
-        <div className="grid meuVideo">
-          <div className="col-2 meuVideo">
-            <video playsInline muted ref={myVideo} autoPlay />
-          </div>
-        </div>
-
-        ) }  */}
 
 
 
