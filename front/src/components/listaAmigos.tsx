@@ -135,14 +135,14 @@ const ListaAmigos: React.FC = () => {
   return (
 
 
-    <div className="col-sm-12 col-md-5 col-lg-3">
+    <div className="col-sm-12 col-md-5 col-lg-3 listaAmigos-modal">
       <div className="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style={{ width: '100%' }}>
 
 
 
         <a href="/" className="d-flex align-items-center flex-shrink-0 p-3 link-body-emphasis text-decoration-none border-bottom">
           <svg className="bi pe-none me-2" width="30" height="24"><use href="#bootstrap"></use></svg>
-          <h4>Amigos:</h4>
+          <h5>Amigos:</h5>
         </a>
 
 
@@ -183,7 +183,7 @@ const ListaAmigos: React.FC = () => {
 
         <a href="/" className="d-flex align-items-center flex-shrink-0 p-3 link-body-emphasis text-decoration-none border-bottom">
           <svg className="bi pe-none me-2" width="30" height="24"><use href="#bootstrap"></use></svg>
-          <h4>Pedidos pendentes:</h4>
+          <h5>Pedidos pendentes:</h5>
         </a>
 
         {/* Adicione aqui o código para listar os pedidos pendentes */}

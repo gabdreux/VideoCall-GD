@@ -82,6 +82,23 @@ i.fa-close {
 }
 
 
+.closeButton-chat-modal-wrapper {
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: flex-end;
+
+}
+
+
+button.closeIcon {
+  border: solid 0px;
+  border-radius: 100px;
+  width: 35px;
+  height: 35px;
+
+}
+
+
 .navbar-brand img {
   width: 140px !important;
 
@@ -432,6 +449,49 @@ video.party2-video {
 div#modalChoice {
   background-color: transparent !important;
   
+}
+
+
+
+.chat-modal {
+  z-index: 100 !important;
+  border: solid 2px var(--color-black);
+  display: flex;
+  height: calc(100vh - 100px);
+
+  padding-top: 80px;
+  padding-bottom: 15px;
+  
+
+  position: absolute;
+  width: 100%;
+
+}
+
+
+.coluna-modal {
+  padding-right: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+}
+
+
+.d-flex.flex-column.align-items-stretch.flex-shrink-0.bg-body-tertiary {
+  height: -webkit-fill-available;
+
+}
+
+
+.listaAmigos-modal {
+  width: 80%;
+  height: 95%;
+  border-radius: 20px;
+  overflow: hidden;
+  border: solid 0px;
+  background-color: var(--color-separate);
+
 }
 
 

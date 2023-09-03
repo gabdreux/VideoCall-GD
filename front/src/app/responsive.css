@@ -41,20 +41,77 @@
 }
 
 
+
+
+@media (max-width: 1025px) {
+
+    .listaAmigos-modal {
+        height: 94% !important;
+
+    }
+
+    a.d-flex.align-items-center.flex-shrink-0.p-3.link-body-emphasis.text-decoration-none.border-bottom {
+        margin-left: -20px !important;
+
+    }
+
+
+}
+
+
+
+
 @media (max-width: 769px) {
+
+    .chat-modal {
+        padding-top: 0px !important;
+        height: calc(100vh - 150px) !important;
+        padding-bottom: 0px !important;
+
+    }
+
+
+    .coluna-modal {
+        padding-right: 0px !important;
+        width: 100% !important;
+
+    }
+
+    
+    .closeButton-chat-modal-wrapper {
+        display: none !important;
+
+    }
+
+    
 
     .party2-video-wrapper  {
         width: 240%;
       
     }
 
+
     .party2-video-wrapper video {
         width: 130%;
         height: 100% !important;
         margin-left: -100px;
+
     }
 
 
+    .coluna-morta-modal {
+        display: none !important;
+
+    }
+
+
+    .listaAmigos-modal {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 0px !important;
+
+
+    }
 
 
 }

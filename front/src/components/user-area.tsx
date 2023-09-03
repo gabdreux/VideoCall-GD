@@ -35,7 +35,7 @@ const UserAera = () => {
 
 
 
-        {callAccepted && !callEnded ? (
+        { 1 === 1 ? (
 
           <VideoCall />
 

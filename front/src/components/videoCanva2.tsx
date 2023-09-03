@@ -37,91 +37,96 @@ const VideoCanva2: React.FC = () => {
     }
 
 
+
+    
     const { name, callAccepted, myVideo, userVideo, callEnded, stream, call } =  context;
     
+
+
     
     return (
 
 
-    <div className="grid text-center videoCanva2" style={{ '--bs-columns': 'col' } as React.CSSProperties }>
+        <div className="grid text-center videoCanva2" style={{ '--bs-columns': 'col' } as React.CSSProperties }>
 
 
-          { 2 === 2 && (
-                <div className='video1v1'>
-                  
+              { 2 === 2 && (
 
-                      { callAccepted && !callEnded && (
-
-                            <div className='party2-video-wrapper'>
-                            <video className='party2-video' playsInline ref={userVideo} autoPlay />
-                            </div>
-
-                      ) }
-
-                        
-
-                      {  stream && (
-
-                          <div className="grid meuVideo">
-                              <video className='part1-video' playsInline muted ref={myVideo} autoPlay />
-                          </div>
-
-                      ) } 
-
-              </div>            
-
-          )}
-
-
-
-
-
-          { 3 === 3 && (
-
-              <div className='video1v2'>
-
-                    { 2 === 2 && (
-                      
-                        <div className='video1v2-wrapper'>
-
-                          <div className='party3-video-wrapper col-6'>
-                            <video className='party2-video party3' playsInline  autoPlay />
-                          </div>
-
-                          <div className='party3-video-wrapper col-6'>
-                            <video className='party2-video party3' playsInline  autoPlay />
-                          </div>
-
-                        </div>
-
-                    ) }
-
+                  <div className='video1v1'>
                       
 
-                    { 1 === 1 && (
+                          { callAccepted && !callEnded && (
 
-                        <div className="grid meuvideo-party3-wrapper">
-                            <video className='meuvideo-party3' playsInline muted  autoPlay />
-                        </div>
+                                <div className='party2-video-wrapper'>
+                                <video className='party2-video' playsInline ref={userVideo} autoPlay />
+                                </div>
 
-                    ) } 
+                          ) }
 
-              </div>            
+                            
+
+                          {  stream && (
+
+                              <div className="grid meuVideo">
+                                  <video className='part1-video' playsInline muted ref={myVideo} autoPlay />
+                              </div>
+
+                          ) } 
+
+                  </div>            
+
+              )}
 
 
-          )}                
 
 
 
+              { 3 != 3 && (
+
+                  <div className='video1v2'>
+
+                            { callAccepted && !callEnded && (
+                              
+                                <div className='video1v2-wrapper'>
+
+
+                                  <div className='party3-video-wrapper col-6'>
+                                    <video className='party2-video party3' playsInline  autoPlay />
+                                  </div>
+
+
+                                  <div className='party3-video-wrapper col-6'>
+                                    <video className='party2-video party3' playsInline  autoPlay />
+                                  </div>
+
+
+                                </div>
+
+                            ) }
+
+                              
+
+                            { stream && (
+
+                                <div className="grid meuvideo-party3-wrapper">
+                                    <video className='meuvideo-party3' playsInline muted  autoPlay />
+                                </div>
+
+                            ) } 
+
+                  </div>            
+
+
+              )}                
 
 
 
+        </div>    
 
-
-    </div>    
 
 
     );
+
 
 };
 
