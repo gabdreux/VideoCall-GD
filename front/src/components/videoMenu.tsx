@@ -3,9 +3,12 @@ import React, { useState, useContext, ReactNode } from 'react';
 
 import { SocketContext } from '@/socketContext';
 
+import { useModal } from '@/useModal';
+
 
 
 const VideoCallMenu: React.FC = () => {
+  
 
   const context = useContext(SocketContext);
 
@@ -17,10 +20,24 @@ const VideoCallMenu: React.FC = () => {
 
 
   
-    const handlePowerOff = () => {
+  const handlePowerOff = () => {
         leaveCall();
 
-      };
+  };
+
+
+
+
+  const { isOpen, openModal, closeModal } = useModal();
+
+
+  const handleModal = () => {
+    isOpen ? closeModal() : openModal();
+
+  };
+
+
+  
 
       
 
@@ -42,7 +59,7 @@ const VideoCallMenu: React.FC = () => {
                 <button><i className='far fa-comment'></i></button>
                 <button className='powerOff' onClick={handlePowerOff}><i className='fas fa-power-off'></i></button>
                 <button className='banAlert'><i className='fas fa-exclamation-circle'></i></button>
-                <button className='bolinMenu'><i className='fas fa-ellipsis-v'></i></button>
+                <button className='bolinMenu' onClick={handleModal}><i className='fas fa-ellipsis-v'></i></button>
               </div>
     
     

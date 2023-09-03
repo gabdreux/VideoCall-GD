@@ -455,7 +455,6 @@ div#modalChoice {
 
 .chat-modal {
   z-index: 100 !important;
-  border: solid 2px var(--color-black);
   display: flex;
   height: calc(100vh - 100px);
 

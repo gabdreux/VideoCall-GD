@@ -8,6 +8,10 @@ import Footer from '../components/footer';
 import { AuthProvider } from '../authContext';
 
 
+import  { ChatModalProvider } from '@/useModal';
+
+
+
 
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -15,14 +19,16 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
 
     <AuthProvider>
+      <ChatModalProvider>
+      <div>
 
-    <div>
+          {/* <Header /> */}
+          <Component {...pageProps} />
+          {/* <Footer /> */}
 
-        {/* <Header /> */}
-        <Component {...pageProps} />
-        {/* <Footer /> */}
+      </div>
 
-    </div>
+      </ChatModalProvider>
 
     </AuthProvider>
     

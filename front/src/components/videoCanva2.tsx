@@ -91,12 +91,12 @@ const VideoCanva2: React.FC = () => {
 
 
                                   <div className='party3-video-wrapper col-6'>
-                                    <video className='party2-video party3' playsInline  autoPlay />
+                                    <video className='party2-video party3' playsInline ref={userVideo} autoPlay />
                                   </div>
 
 
                                   <div className='party3-video-wrapper col-6'>
-                                    <video className='party2-video party3' playsInline  autoPlay />
+                                    <video className='party2-video party3' playsInline  ref={userVideo} autoPlay />
                                   </div>
 
 
@@ -109,7 +109,7 @@ const VideoCanva2: React.FC = () => {
                             { stream && (
 
                                 <div className="grid meuvideo-party3-wrapper">
-                                    <video className='meuvideo-party3' playsInline muted  autoPlay />
+                                    <video className='meuvideo-party3' playsInline muted ref={myVideo} autoPlay />
                                 </div>
 
                             ) } 
