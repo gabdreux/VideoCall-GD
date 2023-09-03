@@ -21,23 +21,6 @@ const Header: React.FC = () => {
 
 
 
-  useEffect(() => {
-    if (window.location.pathname === '/videocall') {
-      // console.log('videocall page');
-      const header = document.getElementById('header');
-      
-  
-      if (header) {
-        header.classList.add('hidden');
-        // console.log("classe adicioanda!");
-      }
-    }
-
-
-  }, []);
-
-
-
   const handleLoginClick = () => {
     window.location.href = '/login';
   };

@@ -20,16 +20,16 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     <AuthProvider>
       <ChatModalProvider>
-      <div>
 
-          {/* <Header /> */}
-          <Component {...pageProps} />
-          {/* <Footer /> */}
+          <div>
 
-      </div>
+              {/* <Header /> */}
+              <Component {...pageProps} />
+              {/* <Footer /> */}
+
+          </div>
 
       </ChatModalProvider>
-
     </AuthProvider>
     
         

@@ -7,8 +7,10 @@ import { useModal } from '@/useModal';
 const ChatModal: React.FC = () => {
   const { isOpen, closeModal } = useModal();
 
+
   if (!isOpen) {
     return null;
+    
   }
 
   

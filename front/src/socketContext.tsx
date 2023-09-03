@@ -68,12 +68,15 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
 
-  const authContext = useContext(AuthContext);
+  // const authContext = useContext(AuthContext);
 
 
 
 
     useEffect(() => {
+
+
+      sessionStorage.setItem('inCall', 'false');      
 
         const newSocket = io('http://localhost:5000/');
   
@@ -190,6 +193,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   };
 
     setCallAccepted(true);
+    sessionStorage.setItem('inCall', 'true');
 
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
@@ -258,12 +262,14 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     socket.on('callAccepted', (signal: any) => {
       setCallAccepted(true);
       peer.signal(signal);
+      sessionStorage.setItem('inCall', 'true');
 
     });
 
 
     socket.on('callEnded', (signal: any) => {
       setCallEnded(true);
+      sessionStorage.setItem('inCall', 'false');
 
     });
 
@@ -322,6 +328,9 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     setCallEnded(true);
     setStream(undefined);
+
+
+    sessionStorage.setItem('inCall', 'false');
 
     // window.location.reload();
   };

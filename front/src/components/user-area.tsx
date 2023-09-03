@@ -5,6 +5,10 @@ import VideoCall from '@/components/videocall';
 import Notifications from '@/components/notifications';
 import { SocketContext } from '@/socketContext';
 
+import Header from './header';
+import { get } from 'jquery';
+import { Session } from 'inspector';
+
 
 
 
@@ -22,20 +26,38 @@ const UserAera = () => {
 
   };
 
-  
+
+
 
 
   return (
 
+
+    
+
     
     <div>
+
       
 
+          { callAccepted && !callEnded ? (
+
+          <></>
+
+          ) : (
+            <Header/>
+          )}
+
+          
+          
+
+
+          
           <Notifications />
 
-          {/* callAccepted && !callEnded ? */}
+        
 
-        { 1 === 1 ? (
+        { callAccepted && !callEnded ? (
 
           <VideoCall />
 
@@ -49,7 +71,7 @@ const UserAera = () => {
 
 
 
-                <ListaAmigos></ListaAmigos>
+                <ListaAmigos />
 
 
 

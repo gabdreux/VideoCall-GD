@@ -3,10 +3,7 @@ import { SocketContext } from '@/socketContext';
 import axios from "axios";
 import { AuthContext } from "@/authContext";
 
-
-
-
-
+import { useModal } from "@/useModal";
 
 
 type User = {
@@ -126,6 +123,9 @@ const ListaAmigos: React.FC = () => {
 
 
 
+  const { isOpen } = useModal();
+
+  const className = `col-sm-12 col-md-5 col-lg-3 ${isOpen ? 'listaAmigos-modal' : ''}`;
 
 
 
@@ -135,7 +135,7 @@ const ListaAmigos: React.FC = () => {
   return (
 
 
-    <div className="col-sm-12 col-md-5 col-lg-3 listaAmigos-modal">
+    <div className={className}>
       <div className="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style={{ width: '100%' }}>
 
 
