@@ -10,7 +10,7 @@ const VideoCanva2: React.FC = () => {
 
     
 
-      useEffect(() => {
+    useEffect(() => {
         if (!context) return;
 
         const { me, callAccepted, callEnded, stream } = context;
@@ -22,6 +22,8 @@ const VideoCanva2: React.FC = () => {
 
         // Capture the stream and set it to video elements
         if (stream) {
+
+
             if (myVideo.current) {
                 myVideo.current.srcObject = stream;
             }
@@ -29,17 +31,27 @@ const VideoCanva2: React.FC = () => {
             if (userVideo.current) {
                 userVideo.current.srcObject = stream;
             }
+
+            if (context.user2Video.current) {
+                context.user2Video.current.srcObject = stream;
+              }
+
+
         }
+
+        
     }, [context]);
+
+
+
 
     if (!context) {
         return null;
     }
 
-
-
     
-    const { name, callAccepted, myVideo, userVideo, callEnded, stream, call } =  context;
+ 
+    const { name, callAccepted, myVideo, userVideo, callEnded, stream, user2Video } =  context;
     
 
 
@@ -96,7 +108,7 @@ const VideoCanva2: React.FC = () => {
 
 
                                   <div className='party3-video-wrapper col-6'>
-                                    <video className='party2-video party3' playsInline  ref={userVideo} autoPlay />
+                                    <video className='party2-video party3' playsInline  ref={user2Video} autoPlay />
                                   </div>
 
 

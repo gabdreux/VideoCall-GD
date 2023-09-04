@@ -11,8 +11,11 @@ const server = require('http').Server(app);
 const { v4: uuidV4 } = require('uuid');
 
 
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
+	// const indexPath = path.join(__dirname, 'views', 'index.html');
+	// res.sendFile(indexPath);
 	res.send('Running');
   });
 
@@ -443,6 +446,8 @@ app.get('/api/friends', extractUserId, (req, res) => {
   
 
   });
+
+
 
 
 

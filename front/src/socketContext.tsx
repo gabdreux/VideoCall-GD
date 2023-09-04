@@ -18,6 +18,7 @@ export interface ContextProps {
   callAccepted: boolean;
   myVideo: React.RefObject<HTMLVideoElement>;
   userVideo: React.RefObject<HTMLVideoElement>;
+  user2Video: React.RefObject<HTMLVideoElement>;
   stream: MediaStream | undefined;
   name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
@@ -28,7 +29,9 @@ export interface ContextProps {
   leaveCall: () => void;
   answerCall: () => void;
   idTocall: string;
-  pushMe: (me: string) => void
+  pushMe: (me: string) => void;
+  // participantCount: number;
+  participants: string[];
 
 }
 
@@ -60,6 +63,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const myVideo = useRef<HTMLVideoElement>(null);
   const userVideo = useRef<HTMLVideoElement>(null);
+  const user2Video = useRef<HTMLVideoElement>(null);
   const connectionRef = useRef<Peer.Instance | null>(null);
 
   const idTocall = '';
@@ -68,7 +72,11 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
 
-  // const authContext = useContext(AuthContext);
+  const [participantCount, setParticipantCount] = useState(1);
+
+  const [participants, setParticipants] = useState<string[]>([]);
+
+
 
 
 
@@ -94,7 +102,9 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   
   
         newSocket.on('disconnect', () => {
-          console.log('Disconnected from server');
+          console.log('Disconnected from server!!!!!!!!!!!!!!!!!', newSocket.id);
+          // setParticipants(participants.filter((participantId) => participantId !== newSocket.id));
+          
         });
 
 
@@ -103,6 +113,12 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           setCall({ isReceivingCall: true, from, name: callerName, signal });
   
         });
+
+
+        // newSocket.on('callEnded', ({ from, name: callerName, signal }: Call) => {
+        //   setParticipants(participants.filter((participantId) => participantId !== newSocket.id));
+  
+        // });
   
   
   
@@ -203,9 +219,17 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     
     peer.on('stream', (currentStream) => {
+      // if (userVideo.current) {
+      //   userVideo.current.srcObject = currentStream; //Other person stream
+      // }
+
       if (userVideo.current) {
-        userVideo.current.srcObject = currentStream; //Other person stream
+        userVideo.current.srcObject = currentStream;
+      } else if (user2Video.current) {
+        user2Video.current.srcObject = currentStream;
       }
+
+
     });
 
 
@@ -250,6 +274,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     console.log("DATA:" , "userToCallID:", id, "ME:", me, "NAME:", name);
 
+    
 
     peer.on('stream', (currentStream) => {
       if (userVideo.current) {
@@ -259,18 +284,28 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     });
 
 
+
     socket.on('callAccepted', (signal: any) => {
       setCallAccepted(true);
       peer.signal(signal);
       sessionStorage.setItem('inCall', 'true');
 
+      setParticipantCount(participantCount + 1);
+      console.log(participantCount, "+1");
+      // setParticipants([...participants, socket.id]);
+
     });
+
 
 
     socket.on('callEnded', (signal: any) => {
       setCallEnded(true);
       sessionStorage.setItem('inCall', 'false');
+      
+      // setParticipantCount(participantCount - 1);
+      // console.log(participantCount, "-1");
 
+      // setParticipants(participants.filter((participantId) => participantId !== socket.id));
     });
 
 
@@ -288,6 +323,8 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const leaveCall = () => {
 
+
+
     const peer = connectionRef.current;
 
     if (!peer) {
@@ -303,7 +340,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     socket.emit("leaveCall", { to: call.from, signal: peer.signal });
 
 
-    // socket.disconnect();
+    socket.disconnect();
 
 
 
@@ -332,7 +369,8 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     sessionStorage.setItem('inCall', 'false');
 
-    // window.location.reload();
+    window.location.reload();
+
   };
 
 
@@ -348,6 +386,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     callAccepted,
     myVideo,
     userVideo,
+    user2Video,
     stream,
     name,
     setName,
@@ -359,6 +398,7 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     answerCall,
     idTocall,
     pushMe,
+    participants,
 
   };
 
