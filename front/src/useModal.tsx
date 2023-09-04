@@ -5,6 +5,9 @@ interface ChatModalontextProps {
   isOpen: boolean;
   openModal: () => void;
   closeModal: () => void;
+  isGptOpen: boolean;
+  openGpt: () => void;
+  closeGpt: () => void;
 
 }
 
@@ -16,6 +19,7 @@ export const ChatModal = createContext<ChatModalontextProps | undefined>(undefin
 export function ChatModalProvider({ children }: { children: ReactNode }) {
 
       const [isOpen, setIsOpen] = useState<boolean>(false);
+      const [isGptOpen, setIsGptOpen] = useState<boolean>(false);
 
       
 
@@ -28,10 +32,19 @@ export function ChatModalProvider({ children }: { children: ReactNode }) {
       };
 
 
+      const openGpt = () => {
+        setIsGptOpen(true);
+      };
+
+      const closeGpt = () => {
+        setIsGptOpen(false);
+      };
+
+
 
 
     return (
-      <ChatModal.Provider value={{ isOpen, openModal, closeModal }}>
+      <ChatModal.Provider value={{ isOpen, openModal, closeModal, isGptOpen, openGpt, closeGpt }}>
         {children}
       </ChatModal.Provider>
     );

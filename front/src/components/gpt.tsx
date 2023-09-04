@@ -9,7 +9,7 @@ const Gpt: React.FC = () => {
   const [resultValue, setResultValue] = useState('');
 
 
-  const OPENAI_API_KEY = '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';
+  const OPENAI_API_KEY = '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';
 
 
   const SendQuestion = () => {
@@ -66,23 +66,38 @@ const Gpt: React.FC = () => {
 
 
   return (
-    <div>
-      <input
-        type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        placeholder="Pergunte algo"
-      />
-      <textarea
-        value={resultValue}
-        onChange={() => {}}
-        placeholder="Resposta da IA"
-      ></textarea>
-      <button onClick={SendQuestion}>Enviar Pergunta</button>
+
+    <div className='gpt-wrapper'>
+
+
+
+      <div className='gpt-answer-wrapper'>
+          <textarea
+            className='gpt-answer-wrapper-txt-area'
+            value={resultValue}
+            onChange={() => {}}
+            placeholder="GPT: Olá!"
+          ></textarea>
+      </div>
+      
+
+      <div className='gpt-question-wrapper'>
+          <textarea
+            className='gpt-question-wrapper-txt-area'
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="Pergunte algo..."
+          />
+      </div>
+
+
+      <button className='questionButton-gpt' onClick={SendQuestion}>Enviar Pergunta</button>
+
+
     </div>
   );
 
-  
+
 };
 
 

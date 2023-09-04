@@ -74,7 +74,9 @@ i.fas {
 i.fa-trash-alt {
   color: var(--color-red);
   font-size: 18px;
+
 }
+
 
 i.fa-close {
   color: var(--color-red);
@@ -82,19 +84,14 @@ i.fa-close {
 }
 
 
-.closeButton-chat-modal-wrapper {
-  margin-bottom: 5px;
-  display: flex;
-  justify-content: flex-end;
-
-}
-
 
 button.closeIcon {
   border: solid 0px;
   border-radius: 100px;
   width: 35px;
   height: 35px;
+  cursor: pointer;
+  z-index: 15;
 
 }
 
@@ -103,6 +100,7 @@ button.closeIcon {
   width: 140px !important;
 
 }
+
 
 
 a.nav-link.px-2 {
@@ -477,6 +475,40 @@ div#modalChoice {
 }
 
 
+
+.closeButton-chat-modal-wrapper {
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: flex-end;
+  width: fit-content;
+
+}
+
+
+
+.toggleTabs-chat-modal-wrapper {
+  border: solid 0px transparent;
+  width: 80%;
+  padding-top: 5px;
+  padding-left: 30px;
+  margin-top: -30px;
+
+}
+
+
+.toggleTabs {
+  background-color: var(--color-green);
+  border: solid 1px transparent;
+  border-radius: 10px 10px 0px 0px;
+  margin-left: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: var(--color-white);
+  font-size: 14px;
+
+}
+
+
 .d-flex.flex-column.align-items-stretch.flex-shrink-0.bg-body-tertiary {
   height: -webkit-fill-available;
 
@@ -486,12 +518,80 @@ div#modalChoice {
 .listaAmigos-modal {
   width: 80%;
   height: 95%;
-  border-radius: 20px;
+  border-radius: 15px;
   overflow: hidden;
   border: solid 0px;
   background-color: var(--color-separate);
 
 }
 
+
+.gpt-wrapper {
+  width: 80%;
+  height: -webkit-fill-available;
+  border: solid 0px;
+  border-radius: 15px;
+  background-color: var(--color-separate);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+
+
+
+.gpt-answer-wrapper {
+  width: 100%;
+  height: -webkit-fill-available;
+  border: solid 0px;
+  border-radius: 15px;
+  
+}
+
+
+.gpt-answer-wrapper-txt-area {
+  width: 100%;
+  height: -webkit-fill-available;
+  padding: 10px;
+  border: solid 0px;
+  border-radius: 15px;
+
+}
+
+
+
+.gpt-question-wrapper {
+  width: 100%;
+  height: 120px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  border: solid 0px;
+  border-radius: 15px;
+  
+}
+
+
+.gpt-question-wrapper-txt-area {
+  width: 100%;
+  height: -webkit-fill-available;
+  padding: 10px;
+  border: solid 0px;
+  border-radius: 15px;
+
+}
+
+
+
+
+
+.questionButton-gpt {
+  border-radius: 15px;
+  border: solid 0px;
+  padding: 5px;
+  color: var(--color-white);
+  background-color: var(--color-green);
+  
+}
 
 
