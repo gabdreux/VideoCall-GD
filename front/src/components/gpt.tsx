@@ -9,7 +9,7 @@ const Gpt: React.FC = () => {
   const [resultValue, setResultValue] = useState('');
 
 
-  const OPENAI_API_KEY = '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';
+  const OPENAI_API_KEY = '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';
 
 
   const SendQuestion = () => {
@@ -25,9 +25,9 @@ const Gpt: React.FC = () => {
         Authorization: 'Bearer ' + OPENAI_API_KEY,
       },
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
+        model: 'text-davinci-003',
         prompt: sQuestion,
-        max_tokens: 100, // tamanho da resposta
+        max_tokens: 500, // tamanho da resposta
         temperature: 0.5, // criatividade na resposta
       }),
     })

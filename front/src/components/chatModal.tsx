@@ -61,12 +61,6 @@ const ChatModal: React.FC = () => {
 
 
 
-
-                  {/* <ListaAmigos/> */}
-{/* 
-                  <Gpt/> */}
-
-
               </div>
 
 
